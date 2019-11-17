@@ -2,6 +2,7 @@ package struct2struct
 
 import (
 	"fmt"
+	"log"
 	"reflect"
 )
 
@@ -153,7 +154,12 @@ func ConvertStructToStruct(fromData interface{}, toData interface{}, convertFrom
 						case reflect.ValueOf(&BOOLVAL).Type():
 							toElemField.Set(reflect.ValueOf(value).Convert(toElemField.Type()))
 						default:
-							toElemField.Set(reflect.ValueOf(value).Convert(toElemField.Type()))
+							if reflect.ValueOf(value).Type().Elem().Kind() == reflect.Struct &&
+								reflect.ValueOf(value).Type().Elem().PkgPath() != toElemField.Type().Elem().PkgPath() {
+								log.Printf("Different package %v - %v ", reflect.ValueOf(value).Type().Elem().PkgPath(), toElemField.Type().Elem().PkgPath())
+							} else {
+								toElemField.Set(reflect.ValueOf(value).Convert(toElemField.Type()))
+							}
 						}
 					default:
 						toElemField.Set(reflect.ValueOf(value).Convert(toElemField.Type()))

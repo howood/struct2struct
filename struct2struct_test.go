@@ -18,7 +18,7 @@ type testFromStruct struct {
 	MapDataPt  *map[string][]string `json:"mapDataPt,omitempty" teststruct:"MapDataPt"`
 	ArrString  []string             `json:"arrString,omitempty" teststruct:"ArrString"`
 	ArrStringP []*string            `json:"arrStringP,omitempty" teststruct:"ArrStringP"`
-	SubS       *SubStruct           `json:"subS,omitempty" teststruct:"SubS"`
+	SubS       *SubFromStruct       `json:"subS,omitempty" teststruct:"SubS"`
 }
 
 type testToStruct struct {
@@ -34,10 +34,10 @@ type testToStruct struct {
 	MapDataPt    map[string][]string  `json:"mapDataPt,omitempty"`
 	ArrString    []string             `json:"arrString,omitempty"`
 	ArrStringP   []*string            `json:"arrStringP,omitempty"`
-	SubS         *SubStruct           `json:"subS,omitempty"`
+	SubS         *SubToStruct         `json:"subS,omitempty"`
 }
 
-type SubStruct struct {
+type SubFromStruct struct {
 	UserId     int32                `json:"userId,omitempty" teststruct:"UserId"`
 	UserName   string               `json:"userName,omitempty" teststruct:"Username"`
 	Email      string               `json:"email,omitempty" teststruct:"Email"`
@@ -50,6 +50,21 @@ type SubStruct struct {
 	MapDataPt  *map[string][]string `json:"mapDataPt,omitempty" teststruct:"MapDataPt"`
 	ArrString  []string             `json:"arrString,omitempty" teststruct:"ArrString"`
 	ArrStringP []*string            `json:"arrStringP,omitempty" teststruct:"ArrStringP"`
+}
+
+type SubToStruct struct {
+	UserId     int32                `json:"userId,omitempty"`
+	UserName   string               `json:"userName,omitempty"`
+	Email      string               `json:"email,omitempty"`
+	GroupID    int64                `json:"groupID,omitempty"`
+	OrgID      int64                `json:"orgID,omitempty"`
+	Flag       *bool                `json:"flag,omitempty"`
+	FlagT      bool                 `json:"flagT,omitempty"`
+	MapData    map[string][]string  `json:"mapData,omitempty"`
+	MapDataP   *map[string][]string `json:"mapDataP,omitempty"`
+	MapDataPt  *map[string][]string `json:"mapDataPt,omitempty"`
+	ArrString  []string             `json:"arrString,omitempty"`
+	ArrStringP []*string            `json:"arrStringP,omitempty"`
 }
 
 type userId int32
@@ -85,7 +100,7 @@ func Test_Convert(t *testing.T) {
 		ArrStringP: []*string{
 			&str1, &str2,
 		},
-		SubS: &SubStruct{
+		SubS: &SubFromStruct{
 			UserId:   2222222,
 			UserName: "aaaaaaa",
 			Email:    "bbbbb",
@@ -142,7 +157,7 @@ func Test_Convert(t *testing.T) {
 		ArrStringP: []*string{
 			&str1, &str2,
 		},
-		SubS: &SubStruct{
+		SubS: &SubToStruct{
 			UserId:   2222222,
 			UserName: "aaaaaaa",
 			Email:    "bbbbb",

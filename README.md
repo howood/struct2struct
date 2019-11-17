@@ -1,6 +1,10 @@
 [![Build Status](https://travis-ci.org/howood/struct2struct.svg?branch=master)](https://travis-ci.org/howood/struct2struct)
-[![Go Pkg](https://img.shields.io/github/release/hjson/hjson-go.svg?style=flat-square&label=go-pkg)](https://github.com/howood/struct2struct/releases)
+[![GitHub release](http://img.shields.io/github/release/howood/struct2struct.svg?style=flat-square)][release]
 [![godoc](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square)](http://godoc.org/github.com/howood/struct2struct)
+[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)][license]
+
+[release]: https://github.com/howood/struct2struct/releases
+[license]: https://github.com/howood/struct2struct/blob/master/LICENSE
 
 # Struct2Struct
 

@@ -32,6 +32,7 @@ func ConvertStructToStruct(fromData interface{}, toData interface{}, convertFrom
 			}
 		}
 		if value != nil && toElemField.IsValid() {
+			// To pointer
 			if toElemField.Type().Kind() == reflect.Ptr {
 				if reflect.ValueOf(value).Type().Kind() == reflect.Ptr && reflect.Indirect(reflect.ValueOf(value)).IsValid() == false {
 					continue

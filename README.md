@@ -1,4 +1,4 @@
-[![Build Status](https://img.shields.io/travis/hjson/hjson-go.svg?style=flat-square)](https://travis-ci.org/howood/struct2struct)
+[![Build Status](https://travis-ci.org/howood/struct2struct.svg?branch=master)](https://travis-ci.org/howood/struct2struct)
 [![Go Pkg](https://img.shields.io/github/release/hjson/hjson-go.svg?style=flat-square&label=go-pkg)](https://github.com/howood/struct2struct/releases)
 [![godoc](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square)](http://godoc.org/github.com/howood/struct2struct)
 

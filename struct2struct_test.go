@@ -171,14 +171,14 @@ func Test_Convert(t *testing.T) {
 		},
 	}
 	resultstruct := testToStruct{}
-	result := Convert(&testfrom, &resultstruct, "teststruct", "").(testToStruct)
+	result := ConvertStructToStruct(&testfrom, &resultstruct, "teststruct", "").(testToStruct)
 	t.Log(result)
 	t.Log(result.SubS)
 	if reflect.DeepEqual(result, testto) == false {
 		t.Fatal("failed Convert")
 	}
 	resultstruct2 := testFromStruct{}
-	result2 := Convert(&testto, &resultstruct2, "", "teststruct").(testFromStruct)
+	result2 := ConvertStructToStruct(&testto, &resultstruct2, "", "teststruct").(testFromStruct)
 	t.Log(result2)
 	t.Log(result2.SubS)
 	if reflect.DeepEqual(result2, testfrom) == false {
@@ -209,7 +209,7 @@ func Test_MergeStructToStruct(t *testing.T) {
 		OrgID:    8888,
 		Flag:     &BOOLVAL,
 	}
-	result := Merge(&testfrom, &testTo, "", "")
+	result := MergeStructToStruct(&testfrom, &testTo, "", "")
 	if reflect.DeepEqual(result, testresult) == false {
 		t.Fatal("failed Convert")
 	}

@@ -39,6 +39,7 @@ func Convert(fromData interface{}, toData interface{}, convertFromTag, convertTo
 					continue
 				}
 				switch converted := value.(type) {
+				// simple type
 				case int:
 					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
 				case int32:
@@ -59,13 +60,8 @@ func Convert(fromData interface{}, toData interface{}, convertFromTag, convertTo
 					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
 				case string:
 					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
+				// Map Type
 				case map[string]string:
-					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
-				case map[string][]string:
-					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
-				case map[string]*string:
-					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
-				case map[string][]*string:
 					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
 				case map[string]int:
 					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
@@ -73,29 +69,25 @@ func Convert(fromData interface{}, toData interface{}, convertFromTag, convertTo
 					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
 				case map[string]int64:
 					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
-				case map[string][]int:
-					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
-				case map[string][]int32:
-					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
-				case map[string][]int64:
-					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
-				case map[string]*int:
-					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
-				case map[string]*int32:
-					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
-				case map[string]*int64:
-					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
-				case map[string][]*int:
-					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
-				case map[string][]*int32:
-					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
-				case map[string][]*int64:
-					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
 				case map[string]uint:
 					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
 				case map[string]uint32:
 					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
 				case map[string]uint64:
+					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
+				case map[string]float32:
+					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
+				case map[string]float64:
+					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
+				case map[string]bool:
+					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
+				case map[string][]string:
+					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
+				case map[string][]int:
+					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
+				case map[string][]int32:
+					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
+				case map[string][]int64:
 					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
 				case map[string][]uint:
 					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
@@ -103,11 +95,40 @@ func Convert(fromData interface{}, toData interface{}, convertFromTag, convertTo
 					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
 				case map[string][]uint64:
 					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
+				case map[string][]float32:
+					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
+				case map[string][]float64:
+					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
+				case map[string][]bool:
+					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
+				// Map Type Pointer
+				case map[string]*string:
+					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
+				case map[string]*int:
+					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
+				case map[string]*int32:
+					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
+				case map[string]*int64:
+					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
 				case map[string]*uint:
 					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
 				case map[string]*uint32:
 					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
 				case map[string]*uint64:
+					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
+				case map[string]*float32:
+					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
+				case map[string]*float64:
+					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
+				case map[string]*bool:
+					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
+				case map[string][]*string:
+					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
+				case map[string][]*int:
+					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
+				case map[string][]*int32:
+					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
+				case map[string][]*int64:
 					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
 				case map[string][]*uint:
 					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
@@ -115,21 +136,15 @@ func Convert(fromData interface{}, toData interface{}, convertFromTag, convertTo
 					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
 				case map[string][]*uint64:
 					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
-				case map[string]float32:
-					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
-				case map[string]float64:
-					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
-				case map[string][]float32:
-					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
-				case map[string][]float64:
-					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
-				case map[string]*float32:
-					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
-				case map[string]*float64:
-					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
 				case map[string][]*float32:
 					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
 				case map[string][]*float64:
+					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
+				case map[string][]*bool:
+					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
+				case map[string]interface{}:
+					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
+				case map[string][]interface{}:
 					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
 				default:
 					switch reflect.ValueOf(value).Type().Kind() {

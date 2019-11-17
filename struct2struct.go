@@ -8,7 +8,7 @@ import (
 var BOOLVAL = true
 
 // Convert Struct to Struct With StructTag
-func Convert(fromData interface{}, toData interface{}, convertFromTag, convertToTag string) interface{} {
+func ConvertStructToStruct(fromData interface{}, toData interface{}, convertFromTag, convertToTag string) interface{} {
 	fromElem := reflect.ValueOf(fromData).Elem()
 	fromSize := fromElem.NumField()
 	toElem := reflect.ValueOf(toData).Elem()
@@ -181,7 +181,7 @@ func Convert(fromData interface{}, toData interface{}, convertFromTag, convertTo
 }
 
 // Merge Struct to Struct With StructTag
-func Merge(source interface{}, destination interface{}, convertFromTag, convertToTag string) interface{} {
+func MergeStructToStruct(source interface{}, destination interface{}, convertFromTag, convertToTag string) interface{} {
 	sourceelem := reflect.ValueOf(source).Elem()
 	sourcesize := sourceelem.NumField()
 	destinationelem := reflect.ValueOf(destination).Elem()

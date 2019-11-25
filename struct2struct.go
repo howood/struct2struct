@@ -36,25 +36,18 @@ func ConvertStructToStruct(fromData interface{}, toData interface{}, convertFrom
 				}
 			}
 		}
-		if value != nil && toElemField.IsValid() && reflect.ValueOf(value).Type().Kind() == reflect.Ptr && reflect.Indirect(reflect.ValueOf(value)).IsValid() == false {
-			continue
-		}
-		if value != nil && toElemField.IsValid() && reflect.ValueOf(value).Type().Kind() != reflect.Ptr && reflect.ValueOf(value).IsValid() == false {
-			continue
-		}
-		if value != nil && toElemField.IsValid() && reflect.ValueOf(value).Type().Kind() == reflect.Ptr && toElemField.Type().Kind() != reflect.Ptr && reflect.Indirect(reflect.ValueOf(value)).IsValid() == false {
-			continue
-		}
 		if value != nil && toElemField.IsValid() {
+			if reflect.ValueOf(value).Type().Kind() == reflect.Ptr && reflect.Indirect(reflect.ValueOf(value)).IsValid() == false {
+				continue
+			}
+			if reflect.ValueOf(value).Type().Kind() != reflect.Ptr && reflect.ValueOf(value).IsValid() == false {
+				continue
+			}
 			// To pointer
 			if toElemField.Type().Kind() == reflect.Ptr {
 				convertValueToPointer(value, &toElemField)
 			} else {
-				if reflect.ValueOf(value).Type().Kind() == reflect.Ptr {
-					toElemField.Set(reflect.Indirect(reflect.ValueOf(value)).Convert(toElemField.Type()))
-				} else {
-					toElemField.Set(reflect.ValueOf(value).Convert(toElemField.Type()))
-				}
+				convertValueToNotPointer(value, &toElemField)
 			}
 		}
 	}
@@ -105,11 +98,7 @@ func MergeStructToStruct(source interface{}, destination interface{}, convertFro
 		if destinationelemfield.Type().Kind() == reflect.Ptr {
 			convertValueToPointer(value, &destinationelemfield)
 		} else {
-			if reflect.ValueOf(value).Type().Kind() == reflect.Ptr {
-				destinationelemfield.Set(reflect.Indirect(reflect.ValueOf(value)).Convert(destinationelemfield.Type()))
-			} else {
-				destinationelemfield.Set(reflect.ValueOf(value).Convert(destinationelemfield.Type()))
-			}
+			convertValueToNotPointer(value, &destinationelemfield)
 		}
 	}
 	return destinationelem.Interface(), nil
@@ -248,6 +237,14 @@ func convertValueToPointer(value interface{}, toElemField *reflect.Value) {
 			reflect.ValueOf(value).Type().Elem().PkgPath() != toElemField.Type().Elem().PkgPath() {
 			return
 		}
+		toElemField.Set(reflect.ValueOf(value).Convert(toElemField.Type()))
+	}
+}
+
+func convertValueToNotPointer(value interface{}, toElemField *reflect.Value) {
+	if reflect.ValueOf(value).Type().Kind() == reflect.Ptr {
+		toElemField.Set(reflect.Indirect(reflect.ValueOf(value)).Convert(toElemField.Type()))
+	} else {
 		toElemField.Set(reflect.ValueOf(value).Convert(toElemField.Type()))
 	}
 }

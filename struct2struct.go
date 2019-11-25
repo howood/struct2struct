@@ -19,23 +19,9 @@ func ConvertStructToStruct(fromData interface{}, toData interface{}, convertFrom
 	}
 
 	for i := 0; i < fromSize; i++ {
-		field := fromElem.Type().Field(i).Name
-		// with convertFromTag ,replace using fromstruct field name to tag name
-		if convertFromTag != "" {
-			if tagval := fromElem.Type().Field(i).Tag.Get(convertFromTag); tagval != "" {
-				field = tagval
-			}
-		}
+		field := getConvertFromTagName(fromElem, i, convertFromTag)
 		value := fromElem.Field(i).Interface()
-		toElemField := toElem.FieldByName(field)
-		// with convertToTag ,replace using tostruct field name to tag name
-		if convertToTag != "" {
-			for j := 0; j < toElem.NumField(); j++ {
-				if tagval := toElem.Type().Field(j).Tag.Get(convertToTag); tagval == field {
-					toElemField = toElem.Field(j)
-				}
-			}
-		}
+		toElemField := getConvertToTag(toElem, field, convertToTag)
 		if value != nil && toElemField.IsValid() {
 			if reflect.ValueOf(value).Type().Kind() == reflect.Ptr && reflect.Indirect(reflect.ValueOf(value)).IsValid() == false {
 				continue
@@ -68,21 +54,9 @@ func MergeStructToStruct(source interface{}, destination interface{}, convertFro
 	}
 
 	for i := 0; i < sourcesize; i++ {
-		field := sourceelem.Type().Field(i).Name
-		if convertFromTag != "" {
-			if tagval := sourceelem.Type().Field(i).Tag.Get(convertFromTag); tagval != "" {
-				field = tagval
-			}
-		}
+		field := getConvertFromTagName(sourceelem, i, convertFromTag)
 		value := sourceelem.Field(i).Interface()
-		destinationelemfield := destinationelem.FieldByName(field)
-		if convertToTag != "" {
-			for j := 0; j < sourceelem.NumField(); j++ {
-				if tagval := sourceelem.Type().Field(j).Tag.Get(convertToTag); tagval == field {
-					destinationelemfield = destinationelem.Field(j)
-				}
-			}
-		}
+		destinationelemfield := getConvertToTag(destinationelem, field, convertToTag)
 		if destinationelemfield.Type().Kind() == reflect.Ptr && reflect.ValueOf(value).Type().Kind() == reflect.Ptr && reflect.Indirect(reflect.ValueOf(value)).IsValid() == false {
 			continue
 		}
@@ -247,4 +221,28 @@ func convertValueToNotPointer(value interface{}, toElemField *reflect.Value) {
 	} else {
 		toElemField.Set(reflect.ValueOf(value).Convert(toElemField.Type()))
 	}
+}
+
+func getConvertFromTagName(fromElem reflect.Value, i int, convertFromTag string) string {
+	field := fromElem.Type().Field(i).Name
+	// with convertFromTag ,replace using fromstruct field name to tag name
+	if convertFromTag != "" {
+		if tagval := fromElem.Type().Field(i).Tag.Get(convertFromTag); tagval != "" {
+			field = tagval
+		}
+	}
+	return field
+}
+
+func getConvertToTag(toElem reflect.Value, field, convertToTag string) reflect.Value {
+	toElemField := toElem.FieldByName(field)
+	// with convertToTag ,replace using tostruct field name to tag name
+	if convertToTag != "" {
+		for i := 0; i < toElem.NumField(); i++ {
+			if tagval := toElem.Type().Field(i).Tag.Get(convertToTag); tagval == field {
+				toElemField = toElem.Field(i)
+			}
+		}
+	}
+	return toElemField
 }

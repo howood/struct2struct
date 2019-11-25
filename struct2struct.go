@@ -42,15 +42,15 @@ func ConvertStructToStruct(fromData interface{}, toData interface{}, convertFrom
 		if value != nil && toElemField.IsValid() && reflect.ValueOf(value).Type().Kind() != reflect.Ptr && reflect.ValueOf(value).IsValid() == false {
 			continue
 		}
+		if value != nil && toElemField.IsValid() && reflect.ValueOf(value).Type().Kind() == reflect.Ptr && toElemField.Type().Kind() != reflect.Ptr && reflect.Indirect(reflect.ValueOf(value)).IsValid() == false {
+			continue
+		}
 		if value != nil && toElemField.IsValid() {
 			// To pointer
 			if toElemField.Type().Kind() == reflect.Ptr {
 				convertValueToPointer(value, &toElemField)
 			} else {
-				if reflect.ValueOf(value).Type().Kind() == reflect.Ptr && toElemField.Type().Kind() != reflect.Ptr {
-					if reflect.Indirect(reflect.ValueOf(value)).IsValid() == false {
-						continue
-					}
+				if reflect.ValueOf(value).Type().Kind() == reflect.Ptr {
 					toElemField.Set(reflect.Indirect(reflect.ValueOf(value)).Convert(toElemField.Type()))
 				} else {
 					toElemField.Set(reflect.ValueOf(value).Convert(toElemField.Type()))

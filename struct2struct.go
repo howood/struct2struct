@@ -36,14 +36,15 @@ func ConvertStructToStruct(fromData interface{}, toData interface{}, convertFrom
 				}
 			}
 		}
+		if value != nil && toElemField.IsValid() && reflect.ValueOf(value).Type().Kind() == reflect.Ptr && reflect.Indirect(reflect.ValueOf(value)).IsValid() == false {
+			continue
+		}
+		if value != nil && toElemField.IsValid() && reflect.ValueOf(value).Type().Kind() != reflect.Ptr && reflect.ValueOf(value).IsValid() == false {
+			continue
+		}
 		if value != nil && toElemField.IsValid() {
 			// To pointer
 			if toElemField.Type().Kind() == reflect.Ptr {
-				if reflect.ValueOf(value).Type().Kind() == reflect.Ptr && reflect.Indirect(reflect.ValueOf(value)).IsValid() == false {
-					continue
-				} else if reflect.ValueOf(value).Type().Kind() != reflect.Ptr && reflect.ValueOf(value).IsValid() == false {
-					continue
-				}
 				convertValueToPointer(value, &toElemField)
 			} else {
 				if reflect.ValueOf(value).Type().Kind() == reflect.Ptr && toElemField.Type().Kind() != reflect.Ptr {
@@ -89,23 +90,25 @@ func MergeStructToStruct(source interface{}, destination interface{}, convertFro
 				}
 			}
 		}
+		if destinationelemfield.Type().Kind() == reflect.Ptr && reflect.ValueOf(value).Type().Kind() == reflect.Ptr && reflect.Indirect(reflect.ValueOf(value)).IsValid() == false {
+			continue
+		}
+		if destinationelemfield.Type().Kind() == reflect.Ptr && reflect.ValueOf(value).Type().Kind() != reflect.Ptr && reflect.ValueOf(value).IsValid() == false {
+			continue
+		}
+		if destinationelemfield.Type().Kind() != reflect.Ptr && (fmt.Sprintf("%v", value) == "0" || fmt.Sprintf("%v", value) == "") {
+			continue
+		}
+		if destinationelemfield.Type().Kind() != reflect.Ptr && reflect.ValueOf(value).Type().Kind() == reflect.Ptr && reflect.Indirect(reflect.ValueOf(value)).IsValid() == false {
+			continue
+		}
 		if destinationelemfield.Type().Kind() == reflect.Ptr {
-			if reflect.ValueOf(value).Type().Kind() == reflect.Ptr && reflect.Indirect(reflect.ValueOf(value)).IsValid() == false {
-				continue
-			} else if reflect.ValueOf(value).Type().Kind() != reflect.Ptr && reflect.ValueOf(value).IsValid() == false {
-				continue
-			}
 			convertValueToPointer(value, &destinationelemfield)
 		} else {
-			if fmt.Sprintf("%v", value) != "0" && fmt.Sprintf("%v", value) != "" {
-				if reflect.ValueOf(value).Type().Kind() == reflect.Ptr && destinationelemfield.Type().Kind() != reflect.Ptr {
-					if reflect.Indirect(reflect.ValueOf(value)).IsValid() == false {
-						continue
-					}
-					destinationelemfield.Set(reflect.Indirect(reflect.ValueOf(value)).Convert(destinationelemfield.Type()))
-				} else {
-					destinationelemfield.Set(reflect.ValueOf(value).Convert(destinationelemfield.Type()))
-				}
+			if reflect.ValueOf(value).Type().Kind() == reflect.Ptr {
+				destinationelemfield.Set(reflect.Indirect(reflect.ValueOf(value)).Convert(destinationelemfield.Type()))
+			} else {
+				destinationelemfield.Set(reflect.ValueOf(value).Convert(destinationelemfield.Type()))
 			}
 		}
 	}

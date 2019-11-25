@@ -188,6 +188,7 @@ func ConvertStructToStruct(fromData interface{}, toData interface{}, convertFrom
 }
 
 // Merge Struct to Struct With StructTag
+// overwrite destination data with source data
 func MergeStructToStruct(source interface{}, destination interface{}, convertFromTag, convertToTag string) interface{} {
 	sourceelem := reflect.ValueOf(source).Elem()
 	sourcesize := sourceelem.NumField()
@@ -215,9 +216,127 @@ func MergeStructToStruct(source interface{}, destination interface{}, convertFro
 			} else if reflect.ValueOf(value).Type().Kind() != reflect.Ptr && reflect.ValueOf(value).IsValid() == false {
 				continue
 			}
-			switch reflect.ValueOf(value).Type() {
-			case reflect.ValueOf(&BOOLVAL).Type():
-				destinationelemfield.Set(reflect.ValueOf(value).Convert(destinationelemfield.Type()))
+			switch converted := value.(type) {
+			// simple type
+			case int:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case int32:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case int64:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case uint:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case uint32:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case uint64:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case float32:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case float64:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case bool:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case string:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			// Map Type
+			case map[string]string:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string]int:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string]int32:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string]int64:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string]uint:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string]uint32:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string]uint64:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string]float32:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string]float64:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string]bool:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string][]string:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string][]int:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string][]int32:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string][]int64:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string][]uint:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string][]uint32:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string][]uint64:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string][]float32:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string][]float64:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string][]bool:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			// Map Type Pointer
+			case map[string]*string:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string]*int:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string]*int32:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string]*int64:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string]*uint:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string]*uint32:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string]*uint64:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string]*float32:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string]*float64:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string]*bool:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string][]*string:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string][]*int:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string][]*int32:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string][]*int64:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string][]*uint:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string][]*uint32:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string][]*uint64:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string][]*float32:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string][]*float64:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string][]*bool:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string]interface{}:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			case map[string][]interface{}:
+				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
+			default:
+				switch reflect.ValueOf(value).Type() {
+				case reflect.ValueOf(&BOOLVAL).Type():
+					destinationelemfield.Set(reflect.ValueOf(value).Convert(destinationelemfield.Type()))
+				default:
+					if reflect.ValueOf(value).Type().Elem().Kind() == reflect.Struct &&
+						reflect.ValueOf(value).Type().Elem().PkgPath() != destinationelemfield.Type().Elem().PkgPath() {
+						//Different package struct in nesting struct
+						continue
+					} else {
+						destinationelemfield.Set(reflect.ValueOf(value).Convert(destinationelemfield.Type()))
+					}
+				}
 			}
 		} else {
 			if fmt.Sprintf("%v", value) != "0" && fmt.Sprintf("%v", value) != "" {

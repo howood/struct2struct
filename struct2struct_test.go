@@ -203,11 +203,59 @@ func Test_Convert(t *testing.T) {
 }
 
 func Test_MergeStructToStruct(t *testing.T) {
+	str1 := "111"
+	str2 := "222"
 	testfrom := testFromStruct{
 		UserId:  333,
 		GroupID: 7777,
 		OrgID:   8888,
 		Flag:    &BOOLVAL,
+		FlagT:   true,
+		MapData: map[string][]string{
+			"aaa": []string{"111", "222"},
+			"bbb": []string{"333", "444"},
+		},
+		MapDataP: &map[string][]string{
+			"ccc": []string{"111", "222"},
+			"ddd": []string{"333", "444"},
+		},
+		MapDataPt: &map[string][]string{
+			"eee": []string{"111", "222"},
+			"fff": []string{"333", "444"},
+		},
+		ArrString: []string{
+			"111", "222",
+		},
+		ArrStringP: []*string{
+			&str1, &str2,
+		},
+		SubS: &SubFromStruct{
+			UserId:   2222222,
+			UserName: "aaaaaaa",
+			Email:    "bbbbb",
+			GroupID:  333333,
+			OrgID:    444444,
+			Flag:     &BOOLVAL,
+			FlagT:    true,
+			MapData: map[string][]string{
+				"aaa": []string{"111", "222"},
+				"bbb": []string{"333", "444"},
+			},
+			MapDataP: &map[string][]string{
+				"ccc": []string{"111", "222"},
+				"ddd": []string{"333", "444"},
+			},
+			MapDataPt: &map[string][]string{
+				"eee": []string{"111", "222"},
+				"fff": []string{"333", "444"},
+			},
+			ArrString: []string{
+				"111", "222",
+			},
+			ArrStringP: []*string{
+				&str1, &str2,
+			},
+		},
 	}
 	testTo := testFromStruct{
 		UserId:   4444,
@@ -215,6 +263,21 @@ func Test_MergeStructToStruct(t *testing.T) {
 		Email:    "bbbbb",
 		GroupID:  333,
 		OrgID:    444,
+		ArrString: []string{
+			"6666", "6655",
+		},
+		MapData: map[string][]string{
+			"vvvv": []string{"111666", "222666"},
+			"ssss": []string{"333666", "444666"},
+		},
+		MapDataP: &map[string][]string{
+			"gggg": []string{"111666", "222666"},
+			"wwww": []string{"333666", "444666"},
+		},
+		MapDataPt: &map[string][]string{
+			"ooooo": []string{"1116666", "22266666"},
+			"ppppp": []string{"3336666", "444666666"},
+		},
 	}
 	testresult := testFromStruct{
 		UserId:   333,
@@ -223,8 +286,55 @@ func Test_MergeStructToStruct(t *testing.T) {
 		GroupID:  7777,
 		OrgID:    8888,
 		Flag:     &BOOLVAL,
+		FlagT:    true,
+		MapData: map[string][]string{
+			"aaa": []string{"111", "222"},
+			"bbb": []string{"333", "444"},
+		},
+		MapDataP: &map[string][]string{
+			"ccc": []string{"111", "222"},
+			"ddd": []string{"333", "444"},
+		},
+		MapDataPt: &map[string][]string{
+			"eee": []string{"111", "222"},
+			"fff": []string{"333", "444"},
+		},
+		ArrString: []string{
+			"111", "222",
+		},
+		ArrStringP: []*string{
+			&str1, &str2,
+		},
+		SubS: &SubFromStruct{
+			UserId:   2222222,
+			UserName: "aaaaaaa",
+			Email:    "bbbbb",
+			GroupID:  333333,
+			OrgID:    444444,
+			Flag:     &BOOLVAL,
+			FlagT:    true,
+			MapData: map[string][]string{
+				"aaa": []string{"111", "222"},
+				"bbb": []string{"333", "444"},
+			},
+			MapDataP: &map[string][]string{
+				"ccc": []string{"111", "222"},
+				"ddd": []string{"333", "444"},
+			},
+			MapDataPt: &map[string][]string{
+				"eee": []string{"111", "222"},
+				"fff": []string{"333", "444"},
+			},
+			ArrString: []string{
+				"111", "222",
+			},
+			ArrStringP: []*string{
+				&str1, &str2,
+			},
+		},
 	}
 	result := MergeStructToStruct(&testfrom, &testTo, "", "")
+	t.Log(result)
 	if reflect.DeepEqual(result, testresult) == false {
 		t.Fatal("failed Convert")
 	}

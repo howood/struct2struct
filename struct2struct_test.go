@@ -80,7 +80,7 @@ func Test_Convert(t *testing.T) {
 		Email:    "bbbbb",
 		GroupID:  333333,
 		OrgID:    444444,
-		Flag:     &BOOLVAL,
+		Flag:     &boolVal,
 		FlagT:    true,
 		MapData: map[string][]string{
 			"aaa": {"111", "222"},
@@ -106,7 +106,7 @@ func Test_Convert(t *testing.T) {
 			Email:    "bbbbb",
 			GroupID:  333333,
 			OrgID:    444444,
-			Flag:     &BOOLVAL,
+			Flag:     &boolVal,
 			FlagT:    true,
 			MapData: map[string][]string{
 				"aaa": {"111", "222"},
@@ -137,8 +137,8 @@ func Test_Convert(t *testing.T) {
 		Email:        "bbbbb",
 		GrpId:        &gid,
 		OrgId:        &oid,
-		ConvertFlag:  &BOOLVAL,
-		ConvertFlagT: &BOOLVAL,
+		ConvertFlag:  &boolVal,
+		ConvertFlagT: &boolVal,
 		MapData: map[string][]string{
 			"aaa": {"111", "222"},
 			"bbb": {"333", "444"},
@@ -163,7 +163,7 @@ func Test_Convert(t *testing.T) {
 			Email:    "bbbbb",
 			GroupID:  333333,
 			OrgID:    444444,
-			Flag:     &BOOLVAL,
+			Flag:     &boolVal,
 			FlagT:    true,
 			MapData: map[string][]string{
 				"aaa": {"111", "222"},
@@ -209,7 +209,7 @@ func Test_MergeStructToStruct(t *testing.T) {
 		UserId:  333,
 		GroupID: 7777,
 		OrgID:   8888,
-		Flag:    &BOOLVAL,
+		Flag:    &boolVal,
 		FlagT:   true,
 		MapData: map[string][]string{
 			"aaa": {"111", "222"},
@@ -235,7 +235,7 @@ func Test_MergeStructToStruct(t *testing.T) {
 			Email:    "bbbbb",
 			GroupID:  333333,
 			OrgID:    444444,
-			Flag:     &BOOLVAL,
+			Flag:     &boolVal,
 			FlagT:    true,
 			MapData: map[string][]string{
 				"aaa": {"111", "222"},
@@ -285,7 +285,7 @@ func Test_MergeStructToStruct(t *testing.T) {
 		Email:    "bbbbb",
 		GroupID:  7777,
 		OrgID:    8888,
-		Flag:     &BOOLVAL,
+		Flag:     &boolVal,
 		FlagT:    true,
 		MapData: map[string][]string{
 			"aaa": {"111", "222"},
@@ -311,7 +311,7 @@ func Test_MergeStructToStruct(t *testing.T) {
 			Email:    "bbbbb",
 			GroupID:  333333,
 			OrgID:    444444,
-			Flag:     &BOOLVAL,
+			Flag:     &boolVal,
 			FlagT:    true,
 			MapData: map[string][]string{
 				"aaa": {"111", "222"},

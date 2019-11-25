@@ -5,9 +5,9 @@ import (
 	"reflect"
 )
 
-var BOOLVAL = true
+var boolVal = true
 
-// Convert Struct to Struct With StructTag
+// ConvertStructToStruct Converts Struct to Struct With StructTag
 func ConvertStructToStruct(fromData interface{}, toData interface{}, convertFromTag, convertToTag string) interface{} {
 	fromElem := reflect.ValueOf(fromData).Elem()
 	fromSize := fromElem.NumField()
@@ -151,7 +151,7 @@ func ConvertStructToStruct(fromData interface{}, toData interface{}, convertFrom
 					switch reflect.ValueOf(value).Type().Kind() {
 					case reflect.Ptr:
 						switch reflect.ValueOf(value).Type() {
-						case reflect.ValueOf(&BOOLVAL).Type():
+						case reflect.ValueOf(&boolVal).Type():
 							toElemField.Set(reflect.ValueOf(value).Convert(toElemField.Type()))
 						default:
 							if reflect.ValueOf(value).Type().Elem().Kind() == reflect.Struct &&
@@ -187,7 +187,7 @@ func ConvertStructToStruct(fromData interface{}, toData interface{}, convertFrom
 	return toElem.Interface()
 }
 
-// Merge Struct to Struct With StructTag
+// MergeStructToStruct Merges Struct to Struct With StructTag
 // overwrite destination data with source data
 func MergeStructToStruct(source interface{}, destination interface{}, convertFromTag, convertToTag string) interface{} {
 	sourceelem := reflect.ValueOf(source).Elem()
@@ -326,7 +326,7 @@ func MergeStructToStruct(source interface{}, destination interface{}, convertFro
 				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
 			default:
 				switch reflect.ValueOf(value).Type() {
-				case reflect.ValueOf(&BOOLVAL).Type():
+				case reflect.ValueOf(&boolVal).Type():
 					destinationelemfield.Set(reflect.ValueOf(value).Convert(destinationelemfield.Type()))
 				default:
 					if reflect.ValueOf(value).Type().Elem().Kind() == reflect.Struct &&

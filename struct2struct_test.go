@@ -11,13 +11,24 @@ type testFromStruct struct {
 	UserID     int32                `json:"userId,omitempty" teststruct:"UserID"`
 	UserName   string               `json:"userName,omitempty" teststruct:"Username"`
 	Email      string               `json:"email,omitempty" teststruct:"Email"`
-	GroupID    int64                `json:"groupID,omitempty" teststruct:"GrpId"`
-	OrgID      int64                `json:"orgID,omitempty" teststruct:"OrgId"`
+	GroupID    int64                `json:"groupID,omitempty" teststruct:"GrpID"`
+	OrgID      int64                `json:"orgID,omitempty" teststruct:"OrgID"`
+	ParamA     int                  `json:"paramA,omitempty"`
+	ParamB     int32                `json:"paramB,omitempty"`
+	ParamC     int64                `json:"paramC,omitempty"`
+	ParamD     float32              `json:"paramD,omitempty"`
+	ParamE     float64              `json:"paramE,omitempty"`
 	Flag       *bool                `json:"flag,omitempty" teststruct:"ConvertFlag"`
 	FlagT      bool                 `json:"flagT,omitempty" teststruct:"ConvertFlagT"`
 	MapData    map[string][]string  `json:"mapData,omitempty" teststruct:"MapData"`
 	MapDataP   *map[string][]string `json:"mapDataP,omitempty" teststruct:"MapDataP"`
 	MapDataPt  *map[string][]string `json:"mapDataPt,omitempty" teststruct:"MapDataPt"`
+	MapData1   map[string]string    `json:"mapData1,omitempty" teststruct:"MapData1"`
+	MapData2   map[string]int       `json:"mapData2,omitempty" teststruct:"MapData2"`
+	MapData3   map[string]int32     `json:"mapData3,omitempty" teststruct:"MapData3"`
+	MapData4   map[string]int64     `json:"mapData4,omitempty" teststruct:"MapData4"`
+	MapData5   map[string]float32   `json:"mapData5,omitempty" teststruct:"MapData5"`
+	MapData6   map[string]float64   `json:"mapData6,omitempty" teststruct:"MapData6"`
 	ArrString  []string             `json:"arrString,omitempty" teststruct:"ArrString"`
 	ArrStringP []*string            `json:"arrStringP,omitempty" teststruct:"ArrStringP"`
 	SubS       *SubFromStruct       `json:"subS,omitempty" teststruct:"SubS"`
@@ -27,13 +38,24 @@ type testToStruct struct {
 	UserID       *userId              `json:"userId,omitempty"`
 	Username     string               `json:"username,omitempty"`
 	Email        string               `json:"email,omitempty"`
-	GrpId        *grpId               `json:"grpId,omitempty"`
-	OrgId        *orgId               `json:"orgId,omitempty"`
+	GrpID        *grpId               `json:"grpID,omitempty"`
+	OrgID        *orgId               `json:"orgID,omitempty"`
+	ParamA       int                  `json:"paramA,omitempty"`
+	ParamB       int32                `json:"paramB,omitempty"`
+	ParamC       int64                `json:"paramC,omitempty"`
+	ParamD       float32              `json:"paramD,omitempty"`
+	ParamE       float64              `json:"paramE,omitempty"`
 	ConvertFlag  *bool                `json:"convertFlag,omitempty"`
 	ConvertFlagT *bool                `json:"convertFlagT,omitempty"`
 	MapData      map[string][]string  `json:"mapData,omitempty"`
 	MapDataP     *map[string][]string `json:"mapDataP,omitempty"`
 	MapDataPt    map[string][]string  `json:"mapDataPt,omitempty"`
+	MapData1     map[string]string    `json:"mapData1,omitempty"`
+	MapData2     map[string]int       `json:"mapData2,omitempty"`
+	MapData3     map[string]int32     `json:"mapData3,omitempty"`
+	MapData4     map[string]int64     `json:"mapData4,omitempty"`
+	MapData5     map[string]float32   `json:"mapData5,omitempty"`
+	MapData6     map[string]float64   `json:"mapData6,omitempty"`
 	ArrString    []string             `json:"arrString,omitempty"`
 	ArrStringP   []*string            `json:"arrStringP,omitempty"`
 	SubS         *SubToStruct         `json:"subS,omitempty"`
@@ -43,8 +65,8 @@ type SubFromStruct struct {
 	UserID     int32                `json:"userId,omitempty" teststruct:"UserID"`
 	UserName   string               `json:"userName,omitempty" teststruct:"Username"`
 	Email      string               `json:"email,omitempty" teststruct:"Email"`
-	GroupID    int64                `json:"groupID,omitempty" teststruct:"GrpId"`
-	OrgID      int64                `json:"orgID,omitempty" teststruct:"OrgId"`
+	GroupID    int64                `json:"groupID,omitempty" teststruct:"GrpID"`
+	OrgID      int64                `json:"orgID,omitempty" teststruct:"OrgID"`
 	Flag       *bool                `json:"flag,omitempty" teststruct:"ConvertFlag"`
 	FlagT      bool                 `json:"flagT,omitempty" teststruct:"ConvertFlagT"`
 	MapData    map[string][]string  `json:"mapData,omitempty" teststruct:"MapData"`
@@ -82,6 +104,11 @@ func Test_Convert(t *testing.T) {
 		Email:    "bbbbb",
 		GroupID:  333333,
 		OrgID:    444444,
+		ParamA:   1,
+		ParamB:   1,
+		ParamC:   1,
+		ParamD:   1.1,
+		ParamE:   1.1,
 		Flag:     &boolVal,
 		FlagT:    true,
 		MapData: map[string][]string{
@@ -95,6 +122,30 @@ func Test_Convert(t *testing.T) {
 		MapDataPt: &map[string][]string{
 			"eee": {"111", "222"},
 			"fff": {"333", "444"},
+		},
+		MapData1: map[string]string{
+			"aaa": "111",
+			"bbb": "333",
+		},
+		MapData2: map[string]int{
+			"aaa": 111,
+			"bbb": 333,
+		},
+		MapData3: map[string]int32{
+			"aaa": 111,
+			"bbb": 333,
+		},
+		MapData4: map[string]int64{
+			"aaa": 111,
+			"bbb": 333,
+		},
+		MapData5: map[string]float32{
+			"aaa": 111,
+			"bbb": 333,
+		},
+		MapData6: map[string]float64{
+			"aaa": 111,
+			"bbb": 333,
 		},
 		ArrString: []string{
 			"111", "222",
@@ -137,8 +188,13 @@ func Test_Convert(t *testing.T) {
 		UserID:       &uid,
 		Username:     "aaaaaaa",
 		Email:        "bbbbb",
-		GrpId:        &gid,
-		OrgId:        &oid,
+		GrpID:        &gid,
+		OrgID:        &oid,
+		ParamA:       1,
+		ParamB:       1,
+		ParamC:       1,
+		ParamD:       1.1,
+		ParamE:       1.1,
 		ConvertFlag:  &boolVal,
 		ConvertFlagT: &boolVal,
 		MapData: map[string][]string{
@@ -152,6 +208,30 @@ func Test_Convert(t *testing.T) {
 		MapDataPt: map[string][]string{
 			"eee": {"111", "222"},
 			"fff": {"333", "444"},
+		},
+		MapData1: map[string]string{
+			"aaa": "111",
+			"bbb": "333",
+		},
+		MapData2: map[string]int{
+			"aaa": 111,
+			"bbb": 333,
+		},
+		MapData3: map[string]int32{
+			"aaa": 111,
+			"bbb": 333,
+		},
+		MapData4: map[string]int64{
+			"aaa": 111,
+			"bbb": 333,
+		},
+		MapData5: map[string]float32{
+			"aaa": 111,
+			"bbb": 333,
+		},
+		MapData6: map[string]float64{
+			"aaa": 111,
+			"bbb": 333,
 		},
 		ArrString: []string{
 			"111", "222",
@@ -226,6 +306,11 @@ func Test_MergeStructToStruct(t *testing.T) {
 		UserID:  333,
 		GroupID: 7777,
 		OrgID:   8888,
+		ParamA:  1,
+		ParamB:  1,
+		ParamC:  1,
+		ParamD:  1.1,
+		ParamE:  1.1,
 		Flag:    &boolVal,
 		FlagT:   true,
 		MapData: map[string][]string{
@@ -239,6 +324,30 @@ func Test_MergeStructToStruct(t *testing.T) {
 		MapDataPt: &map[string][]string{
 			"eee": {"111", "222"},
 			"fff": {"333", "444"},
+		},
+		MapData1: map[string]string{
+			"aaa": "111",
+			"bbb": "333",
+		},
+		MapData2: map[string]int{
+			"aaa": 111,
+			"bbb": 333,
+		},
+		MapData3: map[string]int32{
+			"aaa": 111,
+			"bbb": 333,
+		},
+		MapData4: map[string]int64{
+			"aaa": 111,
+			"bbb": 333,
+		},
+		MapData5: map[string]float32{
+			"aaa": 111,
+			"bbb": 333,
+		},
+		MapData6: map[string]float64{
+			"aaa": 111,
+			"bbb": 333,
 		},
 		ArrString: []string{
 			"111", "222",
@@ -304,6 +413,11 @@ func Test_MergeStructToStruct(t *testing.T) {
 		OrgID:    8888,
 		Flag:     &boolVal,
 		FlagT:    true,
+		ParamA:   1,
+		ParamB:   1,
+		ParamC:   1,
+		ParamD:   1.1,
+		ParamE:   1.1,
 		MapData: map[string][]string{
 			"aaa": {"111", "222"},
 			"bbb": {"333", "444"},
@@ -315,6 +429,30 @@ func Test_MergeStructToStruct(t *testing.T) {
 		MapDataPt: &map[string][]string{
 			"eee": {"111", "222"},
 			"fff": {"333", "444"},
+		},
+		MapData1: map[string]string{
+			"aaa": "111",
+			"bbb": "333",
+		},
+		MapData2: map[string]int{
+			"aaa": 111,
+			"bbb": 333,
+		},
+		MapData3: map[string]int32{
+			"aaa": 111,
+			"bbb": 333,
+		},
+		MapData4: map[string]int64{
+			"aaa": 111,
+			"bbb": 333,
+		},
+		MapData5: map[string]float32{
+			"aaa": 111,
+			"bbb": 333,
+		},
+		MapData6: map[string]float64{
+			"aaa": 111,
+			"bbb": 333,
 		},
 		ArrString: []string{
 			"111", "222",

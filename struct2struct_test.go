@@ -188,24 +188,34 @@ func Test_Convert(t *testing.T) {
 		},
 	}
 	resultstruct := testToStruct{}
-	result := ConvertStructToStruct(&testfrom, &resultstruct, "teststruct", "").(testToStruct)
-	t.Log(result)
-	t.Log(result.SubS)
-	if reflect.DeepEqual(result, testto) == false {
+	result, err := ConvertStructToStruct(&testfrom, &resultstruct, "teststruct", "")
+	if err != nil {
+		t.Fatalf("failed test %#v", err)
+	}
+	t.Log(result.(testToStruct))
+	t.Log(result.(testToStruct).SubS)
+	if reflect.DeepEqual(result.(testToStruct), testto) == false {
 		t.Fatal("failed Convert")
 	}
 	resultstruct2 := testFromStruct{}
-	result2 := ConvertStructToStruct(&testto, &resultstruct2, "", "teststruct").(testFromStruct)
-	t.Log(result2)
-	t.Log(result2.SubS)
-	if reflect.DeepEqual(result2, testfrom) == false {
+	result2, err := ConvertStructToStruct(&testto, &resultstruct2, "", "teststruct")
+	if err != nil {
+		t.Fatalf("failed test %#v", err)
+	}
+	t.Log(result2.(testFromStruct))
+	t.Log(result2.(testFromStruct).SubS)
+	if reflect.DeepEqual(result2.(testFromStruct), testfrom) == false {
 		t.Fatal("failed Convert")
 	}
 	resultstruct3 := testToStruct{}
-	result3 := ConvertStructToStruct(testfrom, resultstruct3, "teststruct", "").(testToStruct)
-	if reflect.DeepEqual(result3, resultstruct3) == false {
-		t.Fatal("failed invalid Convert")
+	result3, err := ConvertStructToStruct(testfrom, resultstruct3, "teststruct", "")
+	if err == nil {
+		t.Fatal("Not err")
+	} else {
+		t.Logf("failed test %#v", err)
 	}
+	t.Log(result3)
+	t.Log(resultstruct3)
 	t.Log("success Convert")
 }
 
@@ -340,15 +350,22 @@ func Test_MergeStructToStruct(t *testing.T) {
 			},
 		},
 	}
-	result := MergeStructToStruct(&testfrom, &testTo, "", "")
+	result, err := MergeStructToStruct(&testfrom, &testTo, "", "")
+	if err != nil {
+		t.Fatalf("failed test %#v", err)
+	}
 	t.Log(result)
 	if reflect.DeepEqual(result, testresult) == false {
 		t.Fatal("failed Merge")
 	}
 	testTo2 := testToStruct{}
-	result2 := MergeStructToStruct(testfrom, testTo2, "teststruct", "")
-	if reflect.DeepEqual(result2, testTo2) == false {
-		t.Fatal("failed invalid Merge")
+	result2, err := MergeStructToStruct(testfrom, testTo2, "teststruct", "")
+	if err == nil {
+		t.Fatal("Not err")
+	} else {
+		t.Logf("failed test %#v", err)
 	}
+	t.Log(result2)
+	t.Log(testTo2)
 	t.Log("success Merge")
 }

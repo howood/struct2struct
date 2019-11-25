@@ -5,8 +5,10 @@ import (
 	"testing"
 )
 
+var boolVal = true
+
 type testFromStruct struct {
-	UserId     int32                `json:"userId,omitempty" teststruct:"UserId"`
+	UserID     int32                `json:"userId,omitempty" teststruct:"UserID"`
 	UserName   string               `json:"userName,omitempty" teststruct:"Username"`
 	Email      string               `json:"email,omitempty" teststruct:"Email"`
 	GroupID    int64                `json:"groupID,omitempty" teststruct:"GrpId"`
@@ -22,7 +24,7 @@ type testFromStruct struct {
 }
 
 type testToStruct struct {
-	UserId       *userId              `json:"userId,omitempty"`
+	UserID       *userId              `json:"userId,omitempty"`
 	Username     string               `json:"username,omitempty"`
 	Email        string               `json:"email,omitempty"`
 	GrpId        *grpId               `json:"grpId,omitempty"`
@@ -38,7 +40,7 @@ type testToStruct struct {
 }
 
 type SubFromStruct struct {
-	UserId     int32                `json:"userId,omitempty" teststruct:"UserId"`
+	UserID     int32                `json:"userId,omitempty" teststruct:"UserID"`
 	UserName   string               `json:"userName,omitempty" teststruct:"Username"`
 	Email      string               `json:"email,omitempty" teststruct:"Email"`
 	GroupID    int64                `json:"groupID,omitempty" teststruct:"GrpId"`
@@ -53,7 +55,7 @@ type SubFromStruct struct {
 }
 
 type SubToStruct struct {
-	UserId     int32                `json:"userId,omitempty"`
+	UserID     int32                `json:"userId,omitempty"`
 	UserName   string               `json:"userName,omitempty"`
 	Email      string               `json:"email,omitempty"`
 	GroupID    int64                `json:"groupID,omitempty"`
@@ -75,7 +77,7 @@ func Test_Convert(t *testing.T) {
 	str1 := "111"
 	str2 := "222"
 	testfrom := testFromStruct{
-		UserId:   2222222,
+		UserID:   2222222,
 		UserName: "aaaaaaa",
 		Email:    "bbbbb",
 		GroupID:  333333,
@@ -101,7 +103,7 @@ func Test_Convert(t *testing.T) {
 			&str1, &str2,
 		},
 		SubS: &SubFromStruct{
-			UserId:   2222222,
+			UserID:   2222222,
 			UserName: "aaaaaaa",
 			Email:    "bbbbb",
 			GroupID:  333333,
@@ -132,7 +134,7 @@ func Test_Convert(t *testing.T) {
 	gid := grpId(333333)
 	oid := orgId(444444)
 	testto := testToStruct{
-		UserId:       &uid,
+		UserID:       &uid,
 		Username:     "aaaaaaa",
 		Email:        "bbbbb",
 		GrpId:        &gid,
@@ -158,7 +160,7 @@ func Test_Convert(t *testing.T) {
 			&str1, &str2,
 		},
 		SubS: &SubToStruct{
-			UserId:   2222222,
+			UserID:   2222222,
 			UserName: "aaaaaaa",
 			Email:    "bbbbb",
 			GroupID:  333333,
@@ -199,6 +201,11 @@ func Test_Convert(t *testing.T) {
 	if reflect.DeepEqual(result2, testfrom) == false {
 		t.Fatal("failed Convert")
 	}
+	resultstruct3 := testToStruct{}
+	result3 := ConvertStructToStruct(testfrom, resultstruct3, "teststruct", "").(testToStruct)
+	if reflect.DeepEqual(result3, resultstruct3) == false {
+		t.Fatal("failed invalid Convert")
+	}
 	t.Log("success Convert")
 }
 
@@ -206,7 +213,7 @@ func Test_MergeStructToStruct(t *testing.T) {
 	str1 := "111"
 	str2 := "222"
 	testfrom := testFromStruct{
-		UserId:  333,
+		UserID:  333,
 		GroupID: 7777,
 		OrgID:   8888,
 		Flag:    &boolVal,
@@ -230,7 +237,7 @@ func Test_MergeStructToStruct(t *testing.T) {
 			&str1, &str2,
 		},
 		SubS: &SubFromStruct{
-			UserId:   2222222,
+			UserID:   2222222,
 			UserName: "aaaaaaa",
 			Email:    "bbbbb",
 			GroupID:  333333,
@@ -258,7 +265,7 @@ func Test_MergeStructToStruct(t *testing.T) {
 		},
 	}
 	testTo := testFromStruct{
-		UserId:   4444,
+		UserID:   4444,
 		UserName: "aaaaaaa",
 		Email:    "bbbbb",
 		GroupID:  333,
@@ -280,7 +287,7 @@ func Test_MergeStructToStruct(t *testing.T) {
 		},
 	}
 	testresult := testFromStruct{
-		UserId:   333,
+		UserID:   333,
 		UserName: "aaaaaaa",
 		Email:    "bbbbb",
 		GroupID:  7777,
@@ -306,7 +313,7 @@ func Test_MergeStructToStruct(t *testing.T) {
 			&str1, &str2,
 		},
 		SubS: &SubFromStruct{
-			UserId:   2222222,
+			UserID:   2222222,
 			UserName: "aaaaaaa",
 			Email:    "bbbbb",
 			GroupID:  333333,
@@ -336,7 +343,12 @@ func Test_MergeStructToStruct(t *testing.T) {
 	result := MergeStructToStruct(&testfrom, &testTo, "", "")
 	t.Log(result)
 	if reflect.DeepEqual(result, testresult) == false {
-		t.Fatal("failed Convert")
+		t.Fatal("failed Merge")
 	}
-	t.Log("success Convert")
+	testTo2 := testToStruct{}
+	result2 := MergeStructToStruct(testfrom, testTo2, "teststruct", "")
+	if reflect.DeepEqual(result2, testTo2) == false {
+		t.Fatal("failed invalid Merge")
+	}
+	t.Log("success Merge")
 }

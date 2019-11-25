@@ -5,10 +5,11 @@ import (
 	"reflect"
 )
 
-var boolVal = true
-
 // ConvertStructToStruct Converts Struct to Struct With StructTag
 func ConvertStructToStruct(fromData interface{}, toData interface{}, convertFromTag, convertToTag string) interface{} {
+	if reflect.ValueOf(fromData).Type().Kind() != reflect.Ptr || reflect.ValueOf(toData).Type().Kind() != reflect.Ptr {
+		return toData
+	}
 	fromElem := reflect.ValueOf(fromData).Elem()
 	fromSize := fromElem.NumField()
 	toElem := reflect.ValueOf(toData).Elem()
@@ -148,23 +149,12 @@ func ConvertStructToStruct(fromData interface{}, toData interface{}, convertFrom
 				case map[string][]interface{}:
 					toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
 				default:
-					switch reflect.ValueOf(value).Type().Kind() {
-					case reflect.Ptr:
-						switch reflect.ValueOf(value).Type() {
-						case reflect.ValueOf(&boolVal).Type():
-							toElemField.Set(reflect.ValueOf(value).Convert(toElemField.Type()))
-						default:
-							if reflect.ValueOf(value).Type().Elem().Kind() == reflect.Struct &&
-								reflect.ValueOf(value).Type().Elem().PkgPath() != toElemField.Type().Elem().PkgPath() {
-								//Different package struct in nesting struct
-								continue
-							} else {
-								toElemField.Set(reflect.ValueOf(value).Convert(toElemField.Type()))
-							}
-						}
-					default:
-						toElemField.Set(reflect.ValueOf(value).Convert(toElemField.Type()))
+					if reflect.ValueOf(value).Type().Kind() == reflect.Ptr &&
+						reflect.ValueOf(value).Type().Elem().Kind() == reflect.Struct &&
+						reflect.ValueOf(value).Type().Elem().PkgPath() != toElemField.Type().Elem().PkgPath() {
+						continue
 					}
+					toElemField.Set(reflect.ValueOf(value).Convert(toElemField.Type()))
 				}
 			} else {
 				if reflect.ValueOf(value).Type().Kind() == reflect.Ptr && toElemField.Type().Kind() != reflect.Ptr {
@@ -190,6 +180,9 @@ func ConvertStructToStruct(fromData interface{}, toData interface{}, convertFrom
 // MergeStructToStruct Merges Struct to Struct With StructTag
 // overwrite destination data with source data
 func MergeStructToStruct(source interface{}, destination interface{}, convertFromTag, convertToTag string) interface{} {
+	if reflect.ValueOf(source).Type().Kind() != reflect.Ptr || reflect.ValueOf(destination).Type().Kind() != reflect.Ptr {
+		return destination
+	}
 	sourceelem := reflect.ValueOf(source).Elem()
 	sourcesize := sourceelem.NumField()
 	destinationelem := reflect.ValueOf(destination).Elem()
@@ -325,18 +318,12 @@ func MergeStructToStruct(source interface{}, destination interface{}, convertFro
 			case map[string][]interface{}:
 				destinationelemfield.Set(reflect.ValueOf(&converted).Convert(destinationelemfield.Type()))
 			default:
-				switch reflect.ValueOf(value).Type() {
-				case reflect.ValueOf(&boolVal).Type():
-					destinationelemfield.Set(reflect.ValueOf(value).Convert(destinationelemfield.Type()))
-				default:
-					if reflect.ValueOf(value).Type().Elem().Kind() == reflect.Struct &&
-						reflect.ValueOf(value).Type().Elem().PkgPath() != destinationelemfield.Type().Elem().PkgPath() {
-						//Different package struct in nesting struct
-						continue
-					} else {
-						destinationelemfield.Set(reflect.ValueOf(value).Convert(destinationelemfield.Type()))
-					}
+				if reflect.ValueOf(value).Type().Elem().Kind() == reflect.Struct &&
+					reflect.ValueOf(value).Type().Elem().PkgPath() != destinationelemfield.Type().Elem().PkgPath() {
+					//Different package struct in nesting struct
+					continue
 				}
+				destinationelemfield.Set(reflect.ValueOf(value).Convert(destinationelemfield.Type()))
 			}
 		} else {
 			if fmt.Sprintf("%v", value) != "0" && fmt.Sprintf("%v", value) != "" {

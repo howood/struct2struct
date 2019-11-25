@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/howood/struct2struct.svg?branch=master)](https://travis-ci.org/howood/struct2struct)
 [![GitHub release](http://img.shields.io/github/release/howood/struct2struct.svg?style=flat-square)][release]
 [![godoc](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square)](http://godoc.org/github.com/howood/struct2struct)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/125c6df22df2c16470ce/test_coverage)](https://codeclimate.com/github/howood/struct2struct/test_coverage)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)][license]
 
 [release]: https://github.com/howood/struct2struct/releases
@@ -28,7 +29,7 @@ $ go get -u github.com/howood/struct2struct
      },
      ....
     }
-    
+
     responseinfo := entity.PlanInfoResponse{}
     position := entity.Position{}
     responseinfo = struct2struct.ConvertStructToStruct(request, &responseinfo, "entitytag", "").(entity.PlanInfoResponse)
@@ -44,7 +45,7 @@ $ go get -u github.com/howood/struct2struct
      Name: "name",
      ....
     }
-    
+
     struct2 := input.Update{
      Name: "name",
      ....

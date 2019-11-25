@@ -8,7 +8,15 @@ script:
 
 env:
   global:
-    - secure: 'AphEpJUpRl42M7ARNoeEZvK5+nPSPTl/iNiexqAiU4SWJHNjiYtasxcSx+uiu/mim9Ts3zQ2uFTU7ByLky5nzB+0F7g52qrw9Pb/YkOx4tcuj7yQhvgKILpot5pcL2WLnI6qsX9FGfxCF/tmAvpYbtDs6Cz++7gGVIUNc+nO4lTS2n+ifGB6xGc7pR09OTPZcF/1Wq3Umco9LL2sBimPoHFaQNG/arcNo4SMnhF0WtE6D/1r0QwbhxMt9QqIFNpnFyZMycTfEcCGbsKH3xi7CsZCi6dcttBBc58iOClce++7mU5egwduJiwgsDcsN1WLNlQoTwKm6POM477s9UGKcNnpNEyoMWi97BaXLz4lUez3EOew4V8QEZxecX3lTeBO/Cx7+R1hCwAbZtG1c3kaLvvQT3QxYT8CJlNvfg2FOURR/UyRDtwTznFeYIdJojD4o1Ey9OJxtbuM2r/+ZYS+eN+QjwHU/cIkxyrtQU9BoLyevJOQad2PykWefNIDU89IXoFjvm6/rzuiTEu5YTZ0Y+Yf/jNrkEA9vF2/YEIQyVxQPkaSIe44kx5CeXvKaQPm6bhJpby/cXgoVCDia2Kp20l7B29H1ZNX6lI0rszX9iPCYbDhrPEy/FBhB73ACiO//nAsRjpFOyDJe7X38++gGeBZUo5SP1VqMJi5PRDN52g='
+    - CC_TEST_REPORTER_ID=6d5b69f8f1194431eb3928b637fd465adea67e2a58dd24cb3cfdcae6ee2b331e
 
-after_success:
-  - bundle exec codeclimate-test-reporter
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+script:
+  - go test -coverprofile c.out ./...
+
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT

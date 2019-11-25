@@ -5,3 +5,10 @@ go:
 
 script:
   - go test -race -v ./...
+
+env:
+  global:
+    - secure: '6d5b69f8f1194431eb3928b637fd465adea67e2a58dd24cb3cfdcae6ee2b331e'
+
+after_success:
+  - bundle exec codeclimate-test-reporter

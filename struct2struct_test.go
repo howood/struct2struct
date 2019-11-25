@@ -83,16 +83,16 @@ func Test_Convert(t *testing.T) {
 		Flag:     &BOOLVAL,
 		FlagT:    true,
 		MapData: map[string][]string{
-			"aaa": []string{"111", "222"},
-			"bbb": []string{"333", "444"},
+			"aaa": {"111", "222"},
+			"bbb": {"333", "444"},
 		},
 		MapDataP: &map[string][]string{
-			"ccc": []string{"111", "222"},
-			"ddd": []string{"333", "444"},
+			"ccc": {"111", "222"},
+			"ddd": {"333", "444"},
 		},
 		MapDataPt: &map[string][]string{
-			"eee": []string{"111", "222"},
-			"fff": []string{"333", "444"},
+			"eee": {"111", "222"},
+			"fff": {"333", "444"},
 		},
 		ArrString: []string{
 			"111", "222",
@@ -109,16 +109,16 @@ func Test_Convert(t *testing.T) {
 			Flag:     &BOOLVAL,
 			FlagT:    true,
 			MapData: map[string][]string{
-				"aaa": []string{"111", "222"},
-				"bbb": []string{"333", "444"},
+				"aaa": {"111", "222"},
+				"bbb": {"333", "444"},
 			},
 			MapDataP: &map[string][]string{
-				"ccc": []string{"111", "222"},
-				"ddd": []string{"333", "444"},
+				"ccc": {"111", "222"},
+				"ddd": {"333", "444"},
 			},
 			MapDataPt: &map[string][]string{
-				"eee": []string{"111", "222"},
-				"fff": []string{"333", "444"},
+				"eee": {"111", "222"},
+				"fff": {"333", "444"},
 			},
 			ArrString: []string{
 				"111", "222",
@@ -140,16 +140,16 @@ func Test_Convert(t *testing.T) {
 		ConvertFlag:  &BOOLVAL,
 		ConvertFlagT: &BOOLVAL,
 		MapData: map[string][]string{
-			"aaa": []string{"111", "222"},
-			"bbb": []string{"333", "444"},
+			"aaa": {"111", "222"},
+			"bbb": {"333", "444"},
 		},
 		MapDataP: &map[string][]string{
-			"ccc": []string{"111", "222"},
-			"ddd": []string{"333", "444"},
+			"ccc": {"111", "222"},
+			"ddd": {"333", "444"},
 		},
 		MapDataPt: map[string][]string{
-			"eee": []string{"111", "222"},
-			"fff": []string{"333", "444"},
+			"eee": {"111", "222"},
+			"fff": {"333", "444"},
 		},
 		ArrString: []string{
 			"111", "222",
@@ -166,16 +166,16 @@ func Test_Convert(t *testing.T) {
 			Flag:     &BOOLVAL,
 			FlagT:    true,
 			MapData: map[string][]string{
-				"aaa": []string{"111", "222"},
-				"bbb": []string{"333", "444"},
+				"aaa": {"111", "222"},
+				"bbb": {"333", "444"},
 			},
 			MapDataP: &map[string][]string{
-				"ccc": []string{"111", "222"},
-				"ddd": []string{"333", "444"},
+				"ccc": {"111", "222"},
+				"ddd": {"333", "444"},
 			},
 			MapDataPt: &map[string][]string{
-				"eee": []string{"111", "222"},
-				"fff": []string{"333", "444"},
+				"eee": {"111", "222"},
+				"fff": {"333", "444"},
 			},
 			ArrString: []string{
 				"111", "222",
@@ -212,16 +212,16 @@ func Test_MergeStructToStruct(t *testing.T) {
 		Flag:    &BOOLVAL,
 		FlagT:   true,
 		MapData: map[string][]string{
-			"aaa": []string{"111", "222"},
-			"bbb": []string{"333", "444"},
+			"aaa": {"111", "222"},
+			"bbb": {"333", "444"},
 		},
 		MapDataP: &map[string][]string{
-			"ccc": []string{"111", "222"},
-			"ddd": []string{"333", "444"},
+			"ccc": {"111", "222"},
+			"ddd": {"333", "444"},
 		},
 		MapDataPt: &map[string][]string{
-			"eee": []string{"111", "222"},
-			"fff": []string{"333", "444"},
+			"eee": {"111", "222"},
+			"fff": {"333", "444"},
 		},
 		ArrString: []string{
 			"111", "222",
@@ -238,16 +238,16 @@ func Test_MergeStructToStruct(t *testing.T) {
 			Flag:     &BOOLVAL,
 			FlagT:    true,
 			MapData: map[string][]string{
-				"aaa": []string{"111", "222"},
-				"bbb": []string{"333", "444"},
+				"aaa": {"111", "222"},
+				"bbb": {"333", "444"},
 			},
 			MapDataP: &map[string][]string{
-				"ccc": []string{"111", "222"},
-				"ddd": []string{"333", "444"},
+				"ccc": {"111", "222"},
+				"ddd": {"333", "444"},
 			},
 			MapDataPt: &map[string][]string{
-				"eee": []string{"111", "222"},
-				"fff": []string{"333", "444"},
+				"eee": {"111", "222"},
+				"fff": {"333", "444"},
 			},
 			ArrString: []string{
 				"111", "222",
@@ -267,16 +267,16 @@ func Test_MergeStructToStruct(t *testing.T) {
 			"6666", "6655",
 		},
 		MapData: map[string][]string{
-			"vvvv": []string{"111666", "222666"},
-			"ssss": []string{"333666", "444666"},
+			"vvvv": {"111666", "222666"},
+			"ssss": {"333666", "444666"},
 		},
 		MapDataP: &map[string][]string{
-			"gggg": []string{"111666", "222666"},
-			"wwww": []string{"333666", "444666"},
+			"gggg": {"111666", "222666"},
+			"wwww": {"333666", "444666"},
 		},
 		MapDataPt: &map[string][]string{
-			"ooooo": []string{"1116666", "22266666"},
-			"ppppp": []string{"3336666", "444666666"},
+			"ooooo": {"1116666", "22266666"},
+			"ppppp": {"3336666", "444666666"},
 		},
 	}
 	testresult := testFromStruct{
@@ -288,16 +288,16 @@ func Test_MergeStructToStruct(t *testing.T) {
 		Flag:     &BOOLVAL,
 		FlagT:    true,
 		MapData: map[string][]string{
-			"aaa": []string{"111", "222"},
-			"bbb": []string{"333", "444"},
+			"aaa": {"111", "222"},
+			"bbb": {"333", "444"},
 		},
 		MapDataP: &map[string][]string{
-			"ccc": []string{"111", "222"},
-			"ddd": []string{"333", "444"},
+			"ccc": {"111", "222"},
+			"ddd": {"333", "444"},
 		},
 		MapDataPt: &map[string][]string{
-			"eee": []string{"111", "222"},
-			"fff": []string{"333", "444"},
+			"eee": {"111", "222"},
+			"fff": {"333", "444"},
 		},
 		ArrString: []string{
 			"111", "222",
@@ -314,16 +314,16 @@ func Test_MergeStructToStruct(t *testing.T) {
 			Flag:     &BOOLVAL,
 			FlagT:    true,
 			MapData: map[string][]string{
-				"aaa": []string{"111", "222"},
-				"bbb": []string{"333", "444"},
+				"aaa": {"111", "222"},
+				"bbb": {"333", "444"},
 			},
 			MapDataP: &map[string][]string{
-				"ccc": []string{"111", "222"},
-				"ddd": []string{"333", "444"},
+				"ccc": {"111", "222"},
+				"ddd": {"333", "444"},
 			},
 			MapDataPt: &map[string][]string{
-				"eee": []string{"111", "222"},
-				"fff": []string{"333", "444"},
+				"eee": {"111", "222"},
+				"fff": {"333", "444"},
 			},
 			ArrString: []string{
 				"111", "222",

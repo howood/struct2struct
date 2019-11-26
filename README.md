@@ -33,8 +33,10 @@ $ go get -u github.com/howood/struct2struct
 
     responseinfo := entity.PlanInfoResponse{}
     position := entity.Position{}
-    responseinfo = struct2struct.ConvertStructToStruct(request, &responseinfo, "entitytag", "").(entity.PlanInfoResponse)
-    position = struct2struct.ConvertStructToStruct(request.Position, &position, "entitytag", "").(entity.Position)
+    obj, err = struct2struct.ConvertStructToStruct(request, &responseinfo, "entitytag", "")
+    responseinfo = obj.(entity.PlanInfoResponse)
+    objsub, err = struct2struct.ConvertStructToStruct(request.Position, &position, "entitytag", "")
+    position = objsub.(entity.PlanInfoResponse)
     responseinfo.Position = &position
 
 ```
@@ -52,6 +54,6 @@ $ go get -u github.com/howood/struct2struct
      ....
     }
 
-    update := struct2struct.MergeStructToStruct(struct1, struct2, "inouttag", "").(input.Update)
-
+    obj, err := struct2struct.MergeStructToStruct(struct1, struct2, "inouttag", "")
+    update = obj.(input.Update)
 ```

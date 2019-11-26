@@ -1,13 +1,13 @@
 package struct2struct
 
 import (
-	"errors"
 	"fmt"
 	"reflect"
 )
 
 // ConvertStructToStruct Converts Struct to Struct With StructTag
 func ConvertStructToStruct(fromData interface{}, toData interface{}, convertFromTag, convertToTag string) (interface{}, error) {
+	var err error
 	fromElem, err := getReflectElem(fromData)
 	if err != nil {
 		return nil, err
@@ -43,6 +43,7 @@ func ConvertStructToStruct(fromData interface{}, toData interface{}, convertFrom
 // MergeStructToStruct Merges Struct to Struct With StructTag
 // overwrite destination data with source data
 func MergeStructToStruct(source interface{}, destination interface{}, convertFromTag, convertToTag string) (interface{}, error) {
+	var err error
 	sourceelem, err := getReflectElem(source)
 	if err != nil {
 		return nil, err
@@ -84,15 +85,12 @@ func getReflectElem(source interface{}) (reflect.Value, error) {
 		return reflect.ValueOf(source).Elem(), nil
 	case reflect.Struct:
 		r := reflect.Indirect(reflect.ValueOf(source)).Convert(reflect.ValueOf(source).Type())
-		if r.CanSet() == false {
-			return reflect.Value{}, errors.New("Not Valid Struct ot Struct pointer: CanSet")
-		}
-		if r.CanAddr() == false {
-			return reflect.Value{}, errors.New("Not Valid Struct ot Struct pointer: CanAddr")
+		if r.CanSet() == false || r.CanAddr() == false {
+			return reflect.Value{}, fmt.Errorf("Not Valid Struct ot Struct pointer: %s", reflect.ValueOf(source).Type().Kind())
 		}
 		return r, nil
 	default:
-		return reflect.Value{}, errors.New("Not Struct ot Struct pointer")
+		return reflect.Value{}, fmt.Errorf("Not Struct ot Struct pointer: %s", reflect.ValueOf(source).Type().Kind())
 	}
 }
 

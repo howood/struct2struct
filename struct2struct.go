@@ -17,16 +17,12 @@ func ConvertStructToStruct(fromData interface{}, toData interface{}, convertFrom
 	if err != nil {
 		return nil, err
 	}
-
 	for i := 0; i < fromSize; i++ {
-		field := getConvertFromTagName(fromElem, i, convertFromTag)
+		fieldname := getFieldNameWithConvertFromTag(fromElem, i, convertFromTag)
 		value := fromElem.Field(i).Interface()
-		toElemField := getConvertToTag(toElem, field, convertToTag)
-		if value != nil && toElemField.IsValid() {
-			if reflect.ValueOf(value).Type().Kind() == reflect.Ptr && reflect.Indirect(reflect.ValueOf(value)).IsValid() == false {
-				continue
-			}
-			if reflect.ValueOf(value).Type().Kind() != reflect.Ptr && reflect.ValueOf(value).IsValid() == false {
+		toElemField := getFieldWithConvertFromTag(toElem, fieldname, convertToTag)
+		if toElemField.IsValid() {
+			if reflect.ValueOf(value).IsValid() == false || reflect.Indirect(reflect.ValueOf(value)).IsValid() == false {
 				continue
 			}
 			// To pointer
@@ -55,19 +51,13 @@ func MergeStructToStruct(source interface{}, destination interface{}, convertFro
 	}
 
 	for i := 0; i < sourcesize; i++ {
-		field := getConvertFromTagName(sourceelem, i, convertFromTag)
+		fieldname := getFieldNameWithConvertFromTag(sourceelem, i, convertFromTag)
 		value := sourceelem.Field(i).Interface()
-		destinationelemfield := getConvertToTag(destinationelem, field, convertToTag)
-		if destinationelemfield.Type().Kind() == reflect.Ptr && reflect.ValueOf(value).Type().Kind() == reflect.Ptr && reflect.Indirect(reflect.ValueOf(value)).IsValid() == false {
-			continue
-		}
-		if destinationelemfield.Type().Kind() == reflect.Ptr && reflect.ValueOf(value).Type().Kind() != reflect.Ptr && reflect.ValueOf(value).IsValid() == false {
+		destinationelemfield := getFieldWithConvertFromTag(destinationelem, fieldname, convertToTag)
+		if reflect.ValueOf(value).IsValid() == false || reflect.Indirect(reflect.ValueOf(value)).IsValid() == false {
 			continue
 		}
 		if destinationelemfield.Type().Kind() != reflect.Ptr && (fmt.Sprintf("%v", value) == "0" || fmt.Sprintf("%v", value) == "") {
-			continue
-		}
-		if destinationelemfield.Type().Kind() != reflect.Ptr && reflect.ValueOf(value).Type().Kind() == reflect.Ptr && reflect.Indirect(reflect.ValueOf(value)).IsValid() == false {
 			continue
 		}
 		if destinationelemfield.Type().Kind() == reflect.Ptr {
@@ -86,11 +76,11 @@ func getReflectElem(source interface{}) (reflect.Value, error) {
 	case reflect.Struct:
 		r := reflect.Indirect(reflect.ValueOf(source)).Convert(reflect.ValueOf(source).Type())
 		if r.CanSet() == false || r.CanAddr() == false {
-			return reflect.Value{}, fmt.Errorf("Not Valid Struct ot Struct pointer: %s", reflect.ValueOf(source).Type().Kind())
+			return reflect.Value{}, fmt.Errorf("Not Valid Struct or Struct pointer: %s", reflect.ValueOf(source).Type().Kind())
 		}
 		return r, nil
 	default:
-		return reflect.Value{}, fmt.Errorf("Not Struct ot Struct pointer: %s", reflect.ValueOf(source).Type().Kind())
+		return reflect.Value{}, fmt.Errorf("Not Struct or Struct pointer: %s", reflect.ValueOf(source).Type().Kind())
 	}
 }
 
@@ -221,7 +211,7 @@ func convertValueToNotPointer(value interface{}, toElemField *reflect.Value) {
 	}
 }
 
-func getConvertFromTagName(fromElem reflect.Value, i int, convertFromTag string) string {
+func getFieldNameWithConvertFromTag(fromElem reflect.Value, i int, convertFromTag string) string {
 	field := fromElem.Type().Field(i).Name
 	// with convertFromTag ,replace using fromstruct field name to tag name
 	if convertFromTag != "" {
@@ -232,7 +222,7 @@ func getConvertFromTagName(fromElem reflect.Value, i int, convertFromTag string)
 	return field
 }
 
-func getConvertToTag(toElem reflect.Value, field, convertToTag string) reflect.Value {
+func getFieldWithConvertFromTag(toElem reflect.Value, field, convertToTag string) reflect.Value {
 	toElemField := toElem.FieldByName(field)
 	// with convertToTag ,replace using tostruct field name to tag name
 	if convertToTag != "" {

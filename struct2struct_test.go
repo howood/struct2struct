@@ -23,6 +23,8 @@ type testFromStruct struct {
 	ParamH      uint64                   `json:"paramE,omitempty" teststruct:"ParamH"`
 	Flag        *bool                    `json:"flag,omitempty" teststruct:"ConvertFlag"`
 	FlagT       bool                     `json:"flagT,omitempty" teststruct:"ConvertFlagT"`
+	FlagErr     *bool                    `json:"flagErr,omitempty" teststruct:"ConvertFlagErr"`
+	InterF      interface{}              `json:"interF,omitempty" teststruct:"InterF"`
 	MapData     map[string][]string      `json:"mapData,omitempty" teststruct:"MapData"`
 	MapDataP    *map[string][]string     `json:"mapDataP,omitempty" teststruct:"MapDataP"`
 	MapDataPt   *map[string][]string     `json:"mapDataPt,omitempty" teststruct:"MapDataPt"`
@@ -74,69 +76,71 @@ type testFromStruct struct {
 }
 
 type testToStruct struct {
-	UserID       *userId                   `json:"userId,omitempty"`
-	Username     *string                   `json:"username,omitempty"`
-	Email        string                    `json:"email,omitempty"`
-	GrpID        *grpId                    `json:"grpID,omitempty"`
-	OrgID        *orgId                    `json:"orgID,omitempty"`
-	ParamA       *int                      `json:"paramA,omitempty"`
-	ParamB       *int32                    `json:"paramB,omitempty"`
-	ParamC       *int64                    `json:"paramC,omitempty"`
-	ParamD       *float32                  `json:"paramD,omitempty"`
-	ParamE       *float64                  `json:"paramE,omitempty"`
-	ParamF       *uint                     `json:"paramE,omitempty"`
-	ParamG       *uint32                   `json:"paramE,omitempty"`
-	ParamH       *uint64                   `json:"paramE,omitempty"`
-	ConvertFlag  *bool                     `json:"convertFlag,omitempty"`
-	ConvertFlagT *bool                     `json:"convertFlagT,omitempty"`
-	MapData      map[string][]string       `json:"mapData,omitempty"`
-	MapDataP     *map[string][]string      `json:"mapDataP,omitempty"`
-	MapDataPt    map[string][]string       `json:"mapDataPt,omitempty"`
-	MapData1     *map[string]string        `json:"mapData1,omitempty"`
-	MapData2     *map[string]int           `json:"mapData2,omitempty"`
-	MapData3     *map[string]int32         `json:"mapData3,omitempty"`
-	MapData4     *map[string]int64         `json:"mapData4,omitempty"`
-	MapData5     *map[string]float32       `json:"mapData5,omitempty"`
-	MapData6     *map[string]float64       `json:"mapData6,omitempty"`
-	MapData7     *map[string]uint          `json:"mapData7,omitempty"`
-	MapData8     *map[string]uint32        `json:"mapData8,omitempty"`
-	MapData9     *map[string]uint64        `json:"mapData9,omitempty"`
-	MapData10    *map[string]bool          `json:"mapData10,omitempty"`
-	MapData1p    *map[string]*string       `json:"mapData1p,omitempty"`
-	MapData2p    *map[string]*int          `json:"mapData2p,omitempty"`
-	MapData3p    *map[string]*int32        `json:"mapData3p,omitempty"`
-	MapData4p    *map[string]*int64        `json:"mapData4p,omitempty"`
-	MapData5p    *map[string]*float32      `json:"mapData5p,omitempty"`
-	MapData6p    *map[string]*float64      `json:"mapData6p,omitempty"`
-	MapData7p    *map[string]*uint         `json:"mapData7p,omitempty"`
-	MapData8p    *map[string]*uint32       `json:"mapData8p,omitempty"`
-	MapData9p    *map[string]*uint64       `json:"mapData9p,omitempty"`
-	MapData10p   *map[string]*bool         `json:"mapData10p,omitempty"`
-	MapData1a    *map[string][]string      `json:"mapData1a,omitempty"`
-	MapData2a    *map[string][]int         `json:"mapData2a,omitempty"`
-	MapData3a    *map[string][]int32       `json:"mapData3a,omitempty"`
-	MapData4a    *map[string][]int64       `json:"mapData4a,omitempty"`
-	MapData5a    *map[string][]float32     `json:"mapData5a,omitempty"`
-	MapData6a    *map[string][]float64     `json:"mapData6a,omitempty"`
-	MapData7a    *map[string][]uint        `json:"mapData7a,omitempty"`
-	MapData8a    *map[string][]uint32      `json:"mapData8a,omitempty"`
-	MapData9a    *map[string][]uint64      `json:"mapData9a,omitempty"`
-	MapData10a   *map[string][]bool        `json:"mapData10a,omitempty"`
-	MapData1ap   *map[string][]*string     `json:"mapData1ap,omitempty"`
-	MapData2ap   *map[string][]*int        `json:"mapData2ap,omitempty"`
-	MapData3ap   *map[string][]*int32      `json:"mapData3ap,omitempty"`
-	MapData4ap   *map[string][]*int64      `json:"mapData4ap,omitempty"`
-	MapData5ap   *map[string][]*float32    `json:"mapData5ap,omitempty"`
-	MapData6ap   *map[string][]*float64    `json:"mapData6ap,omitempty"`
-	MapData7ap   *map[string][]*uint       `json:"mapData7ap,omitempty"`
-	MapData8ap   *map[string][]*uint32     `json:"mapData8ap,omitempty"`
-	MapData9ap   *map[string][]*uint64     `json:"mapData9ap,omitempty"`
-	MapData10ap  *map[string][]*bool       `json:"mapData10ap,omitempty"`
-	MapDataI     *map[string]interface{}   `json:"mapDataI,omitempty"`
-	MapDataIa    *map[string][]interface{} `json:"mapDataIa,omitempty"`
-	ArrString    []string                  `json:"arrString,omitempty"`
-	ArrStringP   []*string                 `json:"arrStringP,omitempty"`
-	SubS         *SubToStruct              `json:"subS,omitempty"`
+	UserID         *userId                   `json:"userId,omitempty"`
+	Username       *string                   `json:"username,omitempty"`
+	Email          string                    `json:"email,omitempty"`
+	GrpID          *grpId                    `json:"grpID,omitempty"`
+	OrgID          *orgId                    `json:"orgID,omitempty"`
+	ParamA         *int                      `json:"paramA,omitempty"`
+	ParamB         *int32                    `json:"paramB,omitempty"`
+	ParamC         *int64                    `json:"paramC,omitempty"`
+	ParamD         *float32                  `json:"paramD,omitempty"`
+	ParamE         *float64                  `json:"paramE,omitempty"`
+	ParamF         *uint                     `json:"paramE,omitempty"`
+	ParamG         *uint32                   `json:"paramE,omitempty"`
+	ParamH         *uint64                   `json:"paramE,omitempty"`
+	ConvertFlag    *bool                     `json:"convertFlag,omitempty"`
+	ConvertFlagT   *bool                     `json:"convertFlagT,omitempty"`
+	ConvertFlagErr *bool                     `json:"convertFlagErr,omitempty"`
+	InterF         interface{}               `json:"interF,omitempty"`
+	MapData        map[string][]string       `json:"mapData,omitempty"`
+	MapDataP       *map[string][]string      `json:"mapDataP,omitempty"`
+	MapDataPt      map[string][]string       `json:"mapDataPt,omitempty"`
+	MapData1       *map[string]string        `json:"mapData1,omitempty"`
+	MapData2       *map[string]int           `json:"mapData2,omitempty"`
+	MapData3       *map[string]int32         `json:"mapData3,omitempty"`
+	MapData4       *map[string]int64         `json:"mapData4,omitempty"`
+	MapData5       *map[string]float32       `json:"mapData5,omitempty"`
+	MapData6       *map[string]float64       `json:"mapData6,omitempty"`
+	MapData7       *map[string]uint          `json:"mapData7,omitempty"`
+	MapData8       *map[string]uint32        `json:"mapData8,omitempty"`
+	MapData9       *map[string]uint64        `json:"mapData9,omitempty"`
+	MapData10      *map[string]bool          `json:"mapData10,omitempty"`
+	MapData1p      *map[string]*string       `json:"mapData1p,omitempty"`
+	MapData2p      *map[string]*int          `json:"mapData2p,omitempty"`
+	MapData3p      *map[string]*int32        `json:"mapData3p,omitempty"`
+	MapData4p      *map[string]*int64        `json:"mapData4p,omitempty"`
+	MapData5p      *map[string]*float32      `json:"mapData5p,omitempty"`
+	MapData6p      *map[string]*float64      `json:"mapData6p,omitempty"`
+	MapData7p      *map[string]*uint         `json:"mapData7p,omitempty"`
+	MapData8p      *map[string]*uint32       `json:"mapData8p,omitempty"`
+	MapData9p      *map[string]*uint64       `json:"mapData9p,omitempty"`
+	MapData10p     *map[string]*bool         `json:"mapData10p,omitempty"`
+	MapData1a      *map[string][]string      `json:"mapData1a,omitempty"`
+	MapData2a      *map[string][]int         `json:"mapData2a,omitempty"`
+	MapData3a      *map[string][]int32       `json:"mapData3a,omitempty"`
+	MapData4a      *map[string][]int64       `json:"mapData4a,omitempty"`
+	MapData5a      *map[string][]float32     `json:"mapData5a,omitempty"`
+	MapData6a      *map[string][]float64     `json:"mapData6a,omitempty"`
+	MapData7a      *map[string][]uint        `json:"mapData7a,omitempty"`
+	MapData8a      *map[string][]uint32      `json:"mapData8a,omitempty"`
+	MapData9a      *map[string][]uint64      `json:"mapData9a,omitempty"`
+	MapData10a     *map[string][]bool        `json:"mapData10a,omitempty"`
+	MapData1ap     *map[string][]*string     `json:"mapData1ap,omitempty"`
+	MapData2ap     *map[string][]*int        `json:"mapData2ap,omitempty"`
+	MapData3ap     *map[string][]*int32      `json:"mapData3ap,omitempty"`
+	MapData4ap     *map[string][]*int64      `json:"mapData4ap,omitempty"`
+	MapData5ap     *map[string][]*float32    `json:"mapData5ap,omitempty"`
+	MapData6ap     *map[string][]*float64    `json:"mapData6ap,omitempty"`
+	MapData7ap     *map[string][]*uint       `json:"mapData7ap,omitempty"`
+	MapData8ap     *map[string][]*uint32     `json:"mapData8ap,omitempty"`
+	MapData9ap     *map[string][]*uint64     `json:"mapData9ap,omitempty"`
+	MapData10ap    *map[string][]*bool       `json:"mapData10ap,omitempty"`
+	MapDataI       *map[string]interface{}   `json:"mapDataI,omitempty"`
+	MapDataIa      *map[string][]interface{} `json:"mapDataIa,omitempty"`
+	ArrString      []string                  `json:"arrString,omitempty"`
+	ArrStringP     []*string                 `json:"arrStringP,omitempty"`
+	SubS           *SubToStruct              `json:"subS,omitempty"`
 }
 
 type SubFromStruct struct {
@@ -693,6 +697,12 @@ func Test_Convert(t *testing.T) {
 	} else {
 		t.Logf("failed test %#v", err)
 	}
+	_, err = ConvertStructToStruct(&testfrom, "", "teststruct", "")
+	if err == nil {
+		t.Fatal("Not err")
+	} else {
+		t.Logf("failed test %#v", err)
+	}
 	t.Log("success Convert")
 }
 
@@ -894,6 +904,12 @@ func Test_MergeStructToStruct(t *testing.T) {
 	}
 	testTo2 := testToStruct{}
 	_, err = MergeStructToStruct(testfrom, testTo2, "teststruct", "")
+	if err == nil {
+		t.Fatal("Not err")
+	} else {
+		t.Logf("failed test %#v", err)
+	}
+	_, err = MergeStructToStruct(&testfrom, "", "teststruct", "")
 	if err == nil {
 		t.Fatal("Not err")
 	} else {

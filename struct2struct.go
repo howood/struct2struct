@@ -194,8 +194,12 @@ func convertValueToPointer(value interface{}, toElemField *reflect.Value) {
 	case map[string][]interface{}:
 		toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
 	default:
-		if reflect.ValueOf(value).Type().Kind() == reflect.Struct &&
+		if (toElemField.Type().Kind() == reflect.Struct || toElemField.Type().Elem().Kind() == reflect.Struct) &&
 			reflect.ValueOf(value).Type().PkgPath() != toElemField.Type().PkgPath() {
+			return
+		}
+		if toElemField.Type().Elem().Kind() == reflect.Struct &&
+			reflect.ValueOf(value).Type().Elem().PkgPath() != toElemField.Type().Elem().PkgPath() {
 			return
 		}
 		toElemField.Set(reflect.ValueOf(value).Convert(toElemField.Type()))
@@ -203,8 +207,13 @@ func convertValueToPointer(value interface{}, toElemField *reflect.Value) {
 }
 
 func convertValueToNotPointer(value interface{}, toElemField *reflect.Value) {
-	if reflect.ValueOf(value).Type().Kind() == reflect.Struct &&
-		reflect.ValueOf(value).Type().PkgPath() != toElemField.Type().PkgPath() {
+	if reflect.ValueOf(value).Type().Kind() == reflect.Ptr &&
+		reflect.ValueOf(value).Type().Elem().Kind() == reflect.Struct &&
+		reflect.ValueOf(value).Type().Elem().PkgPath() != toElemField.Type().PkgPath() {
+		return
+	}
+	if toElemField.Type().Kind() == reflect.Struct &&
+		(reflect.ValueOf(value).Type().PkgPath() != toElemField.Type().PkgPath()) {
 		return
 	}
 	if reflect.ValueOf(value).Type().Kind() == reflect.Ptr {

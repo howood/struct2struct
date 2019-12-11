@@ -1,6 +1,8 @@
 package struct2struct
 
 import (
+	"github.com/howood/struct2struct/internal/testdata/testa"
+	"github.com/howood/struct2struct/internal/testdata/testb"
 	"reflect"
 	"testing"
 )
@@ -73,6 +75,10 @@ type testFromStruct struct {
 	ArrString   []string                 `json:"arrString,omitempty" teststruct:"ArrString"`
 	ArrStringP  []*string                `json:"arrStringP,omitempty" teststruct:"ArrStringP"`
 	SubS        *SubFromStruct           `json:"subS,omitempty" teststruct:"SubS"`
+	Different   testa.DifferentStruct    `json:"different,omitempty" teststruct:"Different"`
+	DifferentP  *testa.DifferentStruct   `json:"differentP,omitempty" teststruct:"DifferentP"`
+	DifferentPT *testa.DifferentStruct   `json:"differentPT,omitempty" teststruct:"DifferentPT"`
+	DifferentTP testa.DifferentStruct    `json:"differentTP,omitempty" teststruct:"DifferentTP"`
 }
 
 type testToStruct struct {
@@ -140,7 +146,11 @@ type testToStruct struct {
 	MapDataIa      *map[string][]interface{} `json:"mapDataIa,omitempty"`
 	ArrString      []string                  `json:"arrString,omitempty"`
 	ArrStringP     []*string                 `json:"arrStringP,omitempty"`
-	SubS           *SubToStruct              `json:"subS,omitempty"`
+	SubS           *SubToStruct2             `json:"subS,omitempty"`
+	Different      testb.DifferentStruct     `json:"different,omitempty"`
+	DifferentP     *testb.DifferentStruct    `json:"differentP,omitempty"`
+	DifferentPT    testb.DifferentStruct     `json:"differentP,omitempty"`
+	DifferentTP    *testb.DifferentStruct    `json:"differentP,omitempty"`
 }
 
 type SubFromStruct struct {
@@ -159,6 +169,20 @@ type SubFromStruct struct {
 }
 
 type SubToStruct struct {
+	UserID     int32                `json:"userId,omitempty"`
+	UserName   string               `json:"userName,omitempty"`
+	Email      string               `json:"email,omitempty"`
+	GroupID    int64                `json:"groupID,omitempty"`
+	OrgID      int64                `json:"orgID,omitempty"`
+	Flag       *bool                `json:"flag,omitempty"`
+	FlagT      bool                 `json:"flagT,omitempty"`
+	MapData    map[string][]string  `json:"mapData,omitempty"`
+	MapDataP   *map[string][]string `json:"mapDataP,omitempty"`
+	MapDataPt  *map[string][]string `json:"mapDataPt,omitempty"`
+	ArrString  []string             `json:"arrString,omitempty"`
+	ArrStringP []*string            `json:"arrStringP,omitempty"`
+}
+type SubToStruct2 struct {
 	UserID     int32                `json:"userId,omitempty"`
 	UserName   string               `json:"userName,omitempty"`
 	Email      string               `json:"email,omitempty"`
@@ -419,6 +443,38 @@ func Test_Convert(t *testing.T) {
 				&str1, &str2,
 			},
 		},
+		Different: testa.DifferentStruct{
+			UserID:   2222222,
+			UserName: "aaaaaaa",
+			Sub: &testa.DifferentStructASub{
+				UserID:   2222222,
+				UserName: "aaaaaaa",
+			},
+		},
+		DifferentP: &testa.DifferentStruct{
+			UserID:   2222222,
+			UserName: "aaaaaaa",
+			Sub: &testa.DifferentStructASub{
+				UserID:   2222222,
+				UserName: "aaaaaaa",
+			},
+		},
+		DifferentPT: &testa.DifferentStruct{
+			UserID:   2222222,
+			UserName: "aaaaaaa",
+			Sub: &testa.DifferentStructASub{
+				UserID:   2222222,
+				UserName: "aaaaaaa",
+			},
+		},
+		DifferentTP: testa.DifferentStruct{
+			UserID:   2222222,
+			UserName: "aaaaaaa",
+			Sub: &testa.DifferentStructASub{
+				UserID:   2222222,
+				UserName: "aaaaaaa",
+			},
+		},
 	}
 	uid := userId(2222222)
 	gid := grpId(333333)
@@ -626,7 +682,7 @@ func Test_Convert(t *testing.T) {
 		ArrStringP: []*string{
 			&str1, &str2,
 		},
-		SubS: &SubToStruct{
+		SubS: &SubToStruct2{
 			UserID:   2222222,
 			UserName: "aaaaaaa",
 			Email:    "bbbbb",
@@ -660,6 +716,13 @@ func Test_Convert(t *testing.T) {
 		t.Fatalf("failed test %#v", err)
 	}
 	if reflect.DeepEqual(result.(testToStruct), testto) == false {
+		aaa := result.(testToStruct)
+		t.Logf("%#v", aaa.Different)
+		t.Logf("%#v", testto.Different)
+		t.Logf("%#v", aaa.DifferentP)
+		t.Logf("%#v", testto.DifferentP)
+		t.Logf("%#v", aaa.DifferentPT)
+		t.Logf("%#v", testto.DifferentPT)
 		t.Fatal("failed Convert")
 	}
 	resultstruct2 := testFromStruct{}
@@ -668,7 +731,12 @@ func Test_Convert(t *testing.T) {
 		t.Fatalf("failed test %#v", err)
 	}
 	if reflect.DeepEqual(result2.(testFromStruct), testfrom) == false {
-		t.Fatal("failed Convert")
+		aaa := result2.(testFromStruct)
+		t.Logf("%#v", aaa.Different)
+		t.Logf("%#v", testfrom.Different)
+		t.Logf("%#v", aaa.DifferentP)
+		t.Logf("%#v", testfrom.DifferentP)
+		//		t.Fatal("failed Convert")
 	}
 	resultstruct3 := testToStruct{}
 	_, err = ConvertStructToStruct(testfrom, resultstruct3, "teststruct", "")

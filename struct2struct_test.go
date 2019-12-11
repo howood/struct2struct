@@ -204,16 +204,16 @@ type grpId int64
 func Test_Convert(t *testing.T) {
 	str1 := "111"
 	str2 := "222"
-	int_1 := 1
-	var int_32 int32 = 1
-	var int_64 int64 = 1
-	var uint_2 uint = 2
-	var uint_32 uint32 = 2
-	var uint_64 uint64 = 2
-	var float_32 float32 = 1.1
-	var float_64 float64 = 1.1
-	bool_t := true
-	bool_f := false
+	intVal1 := 1
+	var intVal32 int32 = 1
+	var intVal64 int64 = 1
+	var uintVal2 uint = 2
+	var uintVal32 uint32 = 2
+	var uintVal64 uint64 = 2
+	var floatVal32 float32 = 1.1
+	var floatVal64 float64 = 1.1
+	boolT := true
+	boolF := false
 	testfrom := testFromStruct{
 		UserID:   2222222,
 		UserName: "aaaaaaa",
@@ -287,128 +287,128 @@ func Test_Convert(t *testing.T) {
 			"bbb": &str2,
 		},
 		MapData2p: map[string]*int{
-			"aaa": &int_1,
-			"bbb": &int_1,
+			"aaa": &intVal1,
+			"bbb": &intVal1,
 		},
 		MapData3p: map[string]*int32{
-			"aaa": &int_32,
-			"bbb": &int_32,
+			"aaa": &intVal32,
+			"bbb": &intVal32,
 		},
 		MapData4p: map[string]*int64{
-			"aaa": &int_64,
-			"bbb": &int_64,
+			"aaa": &intVal64,
+			"bbb": &intVal64,
 		},
 		MapData5p: map[string]*float32{
-			"aaa": &float_32,
-			"bbb": &float_32,
+			"aaa": &floatVal32,
+			"bbb": &floatVal32,
 		},
 		MapData6p: map[string]*float64{
-			"aaa": &float_64,
-			"bbb": &float_64,
+			"aaa": &floatVal64,
+			"bbb": &floatVal64,
 		},
 		MapData7p: map[string]*uint{
-			"aaa": &uint_2,
-			"bbb": &uint_2,
+			"aaa": &uintVal2,
+			"bbb": &uintVal2,
 		},
 		MapData8p: map[string]*uint32{
-			"aaa": &uint_32,
-			"bbb": &uint_32,
+			"aaa": &uintVal32,
+			"bbb": &uintVal32,
 		},
 		MapData9p: map[string]*uint64{
-			"aaa": &uint_64,
-			"bbb": &uint_64,
+			"aaa": &uintVal64,
+			"bbb": &uintVal64,
 		},
 		MapData10p: map[string]*bool{
-			"aaa": &bool_t,
-			"bbb": &bool_f,
+			"aaa": &boolT,
+			"bbb": &boolF,
 		},
 		MapData1a: map[string][]string{
-			"aaa": []string{"111"},
-			"bbb": []string{"333"},
+			"aaa": {"111"},
+			"bbb": {"333"},
 		},
 		MapData2a: map[string][]int{
-			"aaa": []int{111},
-			"bbb": []int{333},
+			"aaa": {111},
+			"bbb": {333},
 		},
 		MapData3a: map[string][]int32{
-			"aaa": []int32{111},
-			"bbb": []int32{333},
+			"aaa": {111},
+			"bbb": {333},
 		},
 		MapData4a: map[string][]int64{
-			"aaa": []int64{111},
-			"bbb": []int64{333},
+			"aaa": {111},
+			"bbb": {333},
 		},
 		MapData5a: map[string][]float32{
-			"aaa": []float32{111},
-			"bbb": []float32{333},
+			"aaa": {111},
+			"bbb": {333},
 		},
 		MapData6a: map[string][]float64{
-			"aaa": []float64{111},
-			"bbb": []float64{333},
+			"aaa": {111},
+			"bbb": {333},
 		},
 		MapData7a: map[string][]uint{
-			"aaa": []uint{111},
-			"bbb": []uint{333},
+			"aaa": {111},
+			"bbb": {333},
 		},
 		MapData8a: map[string][]uint32{
-			"aaa": []uint32{111},
-			"bbb": []uint32{333},
+			"aaa": {111},
+			"bbb": {333},
 		},
 		MapData9a: map[string][]uint64{
-			"aaa": []uint64{111},
-			"bbb": []uint64{333},
+			"aaa": {111},
+			"bbb": {333},
 		},
 		MapData10a: map[string][]bool{
-			"aaa": []bool{true},
-			"bbb": []bool{false},
+			"aaa": {true},
+			"bbb": {false},
 		},
 		MapData1ap: map[string][]*string{
-			"aaa": []*string{&str1},
-			"bbb": []*string{&str2},
+			"aaa": {&str1},
+			"bbb": {&str2},
 		},
 		MapData2ap: map[string][]*int{
-			"aaa": []*int{&int_1},
-			"bbb": []*int{&int_1},
+			"aaa": {&intVal1},
+			"bbb": {&intVal1},
 		},
 		MapData3ap: map[string][]*int32{
-			"aaa": []*int32{&int_32},
-			"bbb": []*int32{&int_32},
+			"aaa": {&intVal32},
+			"bbb": {&intVal32},
 		},
 		MapData4ap: map[string][]*int64{
-			"aaa": []*int64{&int_64},
-			"bbb": []*int64{&int_64},
+			"aaa": {&intVal64},
+			"bbb": {&intVal64},
 		},
 		MapData5ap: map[string][]*float32{
-			"aaa": []*float32{&float_32},
-			"bbb": []*float32{&float_32},
+			"aaa": {&floatVal32},
+			"bbb": {&floatVal32},
 		},
 		MapData6ap: map[string][]*float64{
-			"aaa": []*float64{&float_64},
-			"bbb": []*float64{&float_64},
+			"aaa": {&floatVal64},
+			"bbb": {&floatVal64},
 		},
 		MapData7ap: map[string][]*uint{
-			"aaa": []*uint{&uint_2},
-			"bbb": []*uint{&uint_2},
+			"aaa": {&uintVal2},
+			"bbb": {&uintVal2},
 		},
 		MapData8ap: map[string][]*uint32{
-			"aaa": []*uint32{&uint_32},
-			"bbb": []*uint32{&uint_32},
+			"aaa": {&uintVal32},
+			"bbb": {&uintVal32},
 		},
 		MapData9ap: map[string][]*uint64{
-			"aaa": []*uint64{&uint_64},
-			"bbb": []*uint64{&uint_64},
+			"aaa": {&uintVal64},
+			"bbb": {&uintVal64},
 		},
 		MapData10ap: map[string][]*bool{
-			"aaa": []*bool{&bool_t},
-			"bbb": []*bool{&bool_f},
+			"aaa": {&boolT},
+			"bbb": {&boolF},
 		},
 		MapDataI: map[string]interface{}{
 			"aaa": "111",
 			"bbb": "333",
 		},
 		MapDataIa: map[string][]interface{}{
-			"aaa": []interface{}{"111"},
-			"bbb": []interface{}{"333"},
+			"aaa": {"111"},
+			"bbb": {"333"},
 		},
 		ArrString: []string{
 			"111", "222",
@@ -486,14 +486,14 @@ func Test_Convert(t *testing.T) {
 		Email:        "",
 		GrpID:        &gid,
 		OrgID:        &oid,
-		ParamA:       &int_1,
-		ParamB:       &int_32,
-		ParamC:       &int_64,
-		ParamD:       &float_32,
-		ParamE:       &float_64,
-		ParamF:       &uint_2,
-		ParamG:       &uint_32,
-		ParamH:       &uint_64,
+		ParamA:       &intVal1,
+		ParamB:       &intVal32,
+		ParamC:       &intVal64,
+		ParamD:       &floatVal32,
+		ParamE:       &floatVal64,
+		ParamF:       &uintVal2,
+		ParamG:       &uintVal32,
+		ParamH:       &uintVal64,
 		ConvertFlag:  &boolVal,
 		ConvertFlagT: &boolVal,
 		MapData: map[string][]string{
@@ -553,128 +553,128 @@ func Test_Convert(t *testing.T) {
 			"bbb": &str2,
 		},
 		MapData2p: &map[string]*int{
-			"aaa": &int_1,
-			"bbb": &int_1,
+			"aaa": &intVal1,
+			"bbb": &intVal1,
 		},
 		MapData3p: &map[string]*int32{
-			"aaa": &int_32,
-			"bbb": &int_32,
+			"aaa": &intVal32,
+			"bbb": &intVal32,
 		},
 		MapData4p: &map[string]*int64{
-			"aaa": &int_64,
-			"bbb": &int_64,
+			"aaa": &intVal64,
+			"bbb": &intVal64,
 		},
 		MapData5p: &map[string]*float32{
-			"aaa": &float_32,
-			"bbb": &float_32,
+			"aaa": &floatVal32,
+			"bbb": &floatVal32,
 		},
 		MapData6p: &map[string]*float64{
-			"aaa": &float_64,
-			"bbb": &float_64,
+			"aaa": &floatVal64,
+			"bbb": &floatVal64,
 		},
 		MapData7p: &map[string]*uint{
-			"aaa": &uint_2,
-			"bbb": &uint_2,
+			"aaa": &uintVal2,
+			"bbb": &uintVal2,
 		},
 		MapData8p: &map[string]*uint32{
-			"aaa": &uint_32,
-			"bbb": &uint_32,
+			"aaa": &uintVal32,
+			"bbb": &uintVal32,
 		},
 		MapData9p: &map[string]*uint64{
-			"aaa": &uint_64,
-			"bbb": &uint_64,
+			"aaa": &uintVal64,
+			"bbb": &uintVal64,
 		},
 		MapData10p: &map[string]*bool{
-			"aaa": &bool_t,
-			"bbb": &bool_f,
+			"aaa": &boolT,
+			"bbb": &boolF,
 		},
 		MapData1a: &map[string][]string{
-			"aaa": []string{"111"},
-			"bbb": []string{"333"},
+			"aaa": {"111"},
+			"bbb": {"333"},
 		},
 		MapData2a: &map[string][]int{
-			"aaa": []int{111},
-			"bbb": []int{333},
+			"aaa": {111},
+			"bbb": {333},
 		},
 		MapData3a: &map[string][]int32{
-			"aaa": []int32{111},
-			"bbb": []int32{333},
+			"aaa": {111},
+			"bbb": {333},
 		},
 		MapData4a: &map[string][]int64{
-			"aaa": []int64{111},
-			"bbb": []int64{333},
+			"aaa": {111},
+			"bbb": {333},
 		},
 		MapData5a: &map[string][]float32{
-			"aaa": []float32{111},
-			"bbb": []float32{333},
+			"aaa": {111},
+			"bbb": {333},
 		},
 		MapData6a: &map[string][]float64{
-			"aaa": []float64{111},
-			"bbb": []float64{333},
+			"aaa": {111},
+			"bbb": {333},
 		},
 		MapData7a: &map[string][]uint{
-			"aaa": []uint{111},
-			"bbb": []uint{333},
+			"aaa": {111},
+			"bbb": {333},
 		},
 		MapData8a: &map[string][]uint32{
-			"aaa": []uint32{111},
-			"bbb": []uint32{333},
+			"aaa": {111},
+			"bbb": {333},
 		},
 		MapData9a: &map[string][]uint64{
-			"aaa": []uint64{111},
-			"bbb": []uint64{333},
+			"aaa": {111},
+			"bbb": {333},
 		},
 		MapData10a: &map[string][]bool{
-			"aaa": []bool{true},
-			"bbb": []bool{false},
+			"aaa": {true},
+			"bbb": {false},
 		},
 		MapData1ap: &map[string][]*string{
-			"aaa": []*string{&str1},
-			"bbb": []*string{&str2},
+			"aaa": {&str1},
+			"bbb": {&str2},
 		},
 		MapData2ap: &map[string][]*int{
-			"aaa": []*int{&int_1},
-			"bbb": []*int{&int_1},
+			"aaa": {&intVal1},
+			"bbb": {&intVal1},
 		},
 		MapData3ap: &map[string][]*int32{
-			"aaa": []*int32{&int_32},
-			"bbb": []*int32{&int_32},
+			"aaa": {&intVal32},
+			"bbb": {&intVal32},
 		},
 		MapData4ap: &map[string][]*int64{
-			"aaa": []*int64{&int_64},
-			"bbb": []*int64{&int_64},
+			"aaa": {&intVal64},
+			"bbb": {&intVal64},
 		},
 		MapData5ap: &map[string][]*float32{
-			"aaa": []*float32{&float_32},
-			"bbb": []*float32{&float_32},
+			"aaa": {&floatVal32},
+			"bbb": {&floatVal32},
 		},
 		MapData6ap: &map[string][]*float64{
-			"aaa": []*float64{&float_64},
-			"bbb": []*float64{&float_64},
+			"aaa": {&floatVal64},
+			"bbb": {&floatVal64},
 		},
 		MapData7ap: &map[string][]*uint{
-			"aaa": []*uint{&uint_2},
-			"bbb": []*uint{&uint_2},
+			"aaa": {&uintVal2},
+			"bbb": {&uintVal2},
 		},
 		MapData8ap: &map[string][]*uint32{
-			"aaa": []*uint32{&uint_32},
-			"bbb": []*uint32{&uint_32},
+			"aaa": {&uintVal32},
+			"bbb": {&uintVal32},
 		},
 		MapData9ap: &map[string][]*uint64{
-			"aaa": []*uint64{&uint_64},
-			"bbb": []*uint64{&uint_64},
+			"aaa": {&uintVal64},
+			"bbb": {&uintVal64},
 		},
 		MapData10ap: &map[string][]*bool{
-			"aaa": []*bool{&bool_t},
-			"bbb": []*bool{&bool_f},
+			"aaa": {&boolT},
+			"bbb": {&boolF},
 		},
 		MapDataI: &map[string]interface{}{
 			"aaa": "111",
 			"bbb": "333",
 		},
 		MapDataIa: &map[string][]interface{}{
-			"aaa": []interface{}{"111"},
-			"bbb": []interface{}{"333"},
+			"aaa": {"111"},
+			"bbb": {"333"},
 		},
 		ArrString: []string{
 			"111", "222",

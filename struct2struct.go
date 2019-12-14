@@ -2,6 +2,7 @@ package struct2struct
 
 import (
 	"fmt"
+	"log"
 	"reflect"
 )
 
@@ -85,6 +86,11 @@ func getReflectElem(source interface{}) (reflect.Value, error) {
 }
 
 func convertValueToPointer(value interface{}, toElemField *reflect.Value) {
+	defer func() {
+		if err := recover(); err != nil {
+			log.Println("Struct2Struct Error:", err)
+		}
+	}()
 	switch converted := value.(type) {
 	// simple type
 	case int:
@@ -194,28 +200,37 @@ func convertValueToPointer(value interface{}, toElemField *reflect.Value) {
 	case map[string][]interface{}:
 		toElemField.Set(reflect.ValueOf(&converted).Convert(toElemField.Type()))
 	default:
-		if (toElemField.Type().Kind() == reflect.Struct || toElemField.Type().Elem().Kind() == reflect.Struct) &&
-			reflect.ValueOf(value).Type().PkgPath() != toElemField.Type().PkgPath() {
-			return
-		}
-		if toElemField.Type().Elem().Kind() == reflect.Struct &&
-			reflect.ValueOf(value).Type().Elem().PkgPath() != toElemField.Type().Elem().PkgPath() {
-			return
-		}
+		/*
+			if (toElemField.Type().Kind() == reflect.Struct || toElemField.Type().Elem().Kind() == reflect.Struct) &&
+				reflect.ValueOf(value).Type().PkgPath() != toElemField.Type().PkgPath() {
+				return
+			}
+			if toElemField.Type().Elem().Kind() == reflect.Struct &&
+				reflect.ValueOf(value).Type().Elem().PkgPath() != toElemField.Type().Elem().PkgPath() {
+				return
+			}
+		*/
 		toElemField.Set(reflect.ValueOf(value).Convert(toElemField.Type()))
 	}
 }
 
 func convertValueToNotPointer(value interface{}, toElemField *reflect.Value) {
-	if reflect.ValueOf(value).Type().Kind() == reflect.Ptr &&
-		reflect.ValueOf(value).Type().Elem().Kind() == reflect.Struct &&
-		reflect.ValueOf(value).Type().Elem().PkgPath() != toElemField.Type().PkgPath() {
-		return
-	}
-	if toElemField.Type().Kind() == reflect.Struct &&
-		(reflect.ValueOf(value).Type().PkgPath() != toElemField.Type().PkgPath()) {
-		return
-	}
+	defer func() {
+		if err := recover(); err != nil {
+			log.Println("Struct2Struct Error:", err)
+		}
+	}()
+	/*
+		if reflect.ValueOf(value).Type().Kind() == reflect.Ptr &&
+			reflect.ValueOf(value).Type().Elem().Kind() == reflect.Struct &&
+			reflect.ValueOf(value).Type().Elem().PkgPath() != toElemField.Type().PkgPath() {
+			return
+		}
+		if toElemField.Type().Kind() == reflect.Struct &&
+			(reflect.ValueOf(value).Type().PkgPath() != toElemField.Type().PkgPath()) {
+			return
+		}
+	*/
 	if reflect.ValueOf(value).Type().Kind() == reflect.Ptr {
 		toElemField.Set(reflect.Indirect(reflect.ValueOf(value)).Convert(toElemField.Type()))
 	} else {

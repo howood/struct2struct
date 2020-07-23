@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/howood/struct2struct.svg?branch=master)](https://travis-ci.org/howood/struct2struct)
 [![GitHub release](http://img.shields.io/github/release/howood/struct2struct.svg?style=flat-square)][release]
-[![godoc](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square)](http://godoc.org/github.com/howood/struct2struct)
+[![go.dev reference](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=for-the-badge)](https://pkg.go.dev/github.com/howood/struct2struct)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/125c6df22df2c16470ce/test_coverage)](https://codeclimate.com/github/howood/struct2struct/test_coverage)
 [![Go Report Card](https://goreportcard.com/badge/github.com/howood/struct2struct)](https://goreportcard.com/report/github.com/howood/struct2struct)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)][license]
